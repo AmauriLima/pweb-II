@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerenciamento de Biblioteca</title>
+</head>
+<body>
+  <header>
+    <h1>Gerenciamento de Biblioteca</h1>
+  </header>
+
+  <main>
+    <section>
+      <article>
+        <h2>Descrição</h2>
+        <p>
+          Uma API para gerenciar o acervo de uma biblioteca, os leitores cadastrados e os empréstimos de livros. O sistema permite autenticação via JWT para admins (gestores da biblioteca), controle de disponibilidade de livros e histórico de empréstimos.
+        </p>
+      </article>
+
+      <article>
+        <h2>Funcionalidades</h2>
+        <ul>
+          <li>
+            <h3>Usuários:</h3>
+            <p>
+              Registro e autenticação de admins (via JWT).
+              Autenticação de leitores (via JWT).
+            </p>
+          </li>
+          <li>
+            <h3>Livros:</h3>
+            <p>
+              CRUD completo: listar, cadastrar, editar e excluir livros.
+              Atualização automática de quantidadeDisponivel com base nos empréstimos.
+            </p>
+          </li>
+          <li>
+            <h3>Leitores:</h3>
+            <p>
+              Cadastro, listagem, edição e exclusão de leitores por admin.
+              Leitores podem ver seu histórico e listar acervo da biblioteca.
+            </p>
+          </li>
+          <li>
+            <h3>Empréstimos:</h3>
+            <p>
+              Registro de novos empréstimos com validação de disponibilidade de livros.
+            Atualização de status para "devolvido" quando um livro é devolvido.
+            Listagem de empréstimos pendentes e histórico completo.
+            </p>
+          </li>
+          <li>
+            <h3>Relatórios:</h3>
+            <p>
+              Listar os livros mais emprestados.
+              Mostrar histórico de empréstimos por leitor.
+            </p>
+          </li>
+        </ul>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    <strong>Dupla:</strong>
+    <p>Amauri Pereira de Lima Júnior</p>
+    <p>Anderson de Lima Leite</p>
+  </footer>
+
+</body>
+</html>
