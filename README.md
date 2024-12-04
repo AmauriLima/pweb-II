@@ -1,5 +1,5 @@
 # pweb-II
 
 Dupla:
-Amauri Pereira de Lima Júnior
-Anderson de Lima Leite
+- Amauri Pereira de Lima Júnior
+- Anderson de Lima Leite
