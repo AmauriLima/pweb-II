@@ -1,12 +1,7 @@
 import { IController } from '@/application/shared/http/interfaces/controller';
 import { NextFunction, Request, Response } from 'express';
 
-interface Options {
-  shallRedirect: boolean;
-  bodyParamUrl: string;
-}
-
-export function routeAdapter(controller: IController, options?: Options) {
+export function routeAdapter(controller: IController) {
   return async (request: Request, response: Response, next: NextFunction) => {
     try {
       const { statusCode, body } = await controller.handle({
@@ -16,10 +11,6 @@ export function routeAdapter(controller: IController, options?: Options) {
         account: request.metadata?.account,
         headers: request.headers as Record<string, string>,
       });
-
-      if (options && options.shallRedirect && body) {
-        return response.redirect(body[options.bodyParamUrl]);
-      }
 
       response.status(statusCode).json(body);
     } catch (error) {
