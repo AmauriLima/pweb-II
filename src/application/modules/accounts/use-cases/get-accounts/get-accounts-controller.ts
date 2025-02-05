@@ -12,7 +12,7 @@ export class GetAccountsController implements IController {
   async handle(_request: IHttpRequest): Promise<IHttpResponse> {
     const { accounts } = await this.useCase.execute();
 
-    return new HttpResponse().ok({
+    return HttpResponse.ok({
       body: accounts.map(AccountMapper.toHttp)
     });
   }

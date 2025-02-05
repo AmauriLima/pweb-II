@@ -15,7 +15,7 @@ export class CreateAccountController implements IController {
 
     const { account } = await this.useCase.execute(parsedBody);
 
-    return new HttpResponse().created({
+    return HttpResponse.created({
       body: AccountMapper.toHttp(account)
     });
   }
