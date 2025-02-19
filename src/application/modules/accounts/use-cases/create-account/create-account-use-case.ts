@@ -1,3 +1,4 @@
+import { ConflictHTTPError } from "@/application/shared/http/errors/conflict-http-error";
 import { IUseCase } from "@/application/shared/http/interfaces/use-case";
 import { Account } from "../../entities/account";
 import { AccountRepository } from "../../repositories/account-repository";
@@ -14,6 +15,12 @@ export class CreateAccountUseCase implements IUseCase<IInput, IOutput> {
   ) {}
 
   async execute({ email, name, password }: IInput): Promise<IOutput> {
+    const accountAlreadyExists = await this.accountRepo.getAccountByEmail(email);
+
+    if (accountAlreadyExists) {
+      throw new ConflictHTTPError('Já existe uma conta com esse email');
+    }
+
     const account = new Account({
       name,
       email,

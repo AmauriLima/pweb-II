@@ -4,7 +4,6 @@ import { HttpError } from '../errors/http-error';
 import { IErrorMiddleware } from '../interfaces/error-middleware';
 import { IHttpResponse, IHttpStatusCode } from '../interfaces/http';
 
-
 export class HandleApplicationErrorMiddleware implements IErrorMiddleware {
   handle(error: unknown): IHttpResponse {
     if (error instanceof ZodError) {
@@ -35,6 +34,7 @@ export class HandleApplicationErrorMiddleware implements IErrorMiddleware {
         }
       };
     }
+
     if (error instanceof Error) {
       return {
         statusCode: IHttpStatusCode.INTERNAL_SERVER_ERROR,
