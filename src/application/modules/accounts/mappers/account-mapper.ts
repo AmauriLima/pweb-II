@@ -1,4 +1,6 @@
+import { generateSchema } from "@anatine/zod-openapi";
 import { Prisma, Account as RawAccount } from "@prisma/client";
+import { z } from "zod";
 import { Account } from "../entities/account";
 
 export class AccountMapper {
@@ -35,3 +37,14 @@ export class AccountMapper {
     }
   }
 }
+
+export const accountHttpSchema = generateSchema(
+  z.object({
+    id: z.string().uuid(),
+    name: z.string(),
+    email: z.string().email(),
+    password: z.string(),
+    createdAt: z.string().datetime(),
+    updatedAt: z.string().datetime(),
+  })
+);

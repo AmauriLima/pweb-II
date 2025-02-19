@@ -8,7 +8,6 @@ export class PrismaAccountRepository implements AccountRepository {
   constructor(
     private readonly prismaClient: PrismaClient
   ) {}
-
   async createAccount(account: Account): Promise<void> {
     await this.prismaClient.account.create({
       data: AccountMapper.toPersistence(account)
@@ -19,5 +18,13 @@ export class PrismaAccountRepository implements AccountRepository {
     const accounts = await this.prismaClient.account.findMany();
 
     return accounts.map(AccountMapper.toDomain);
+  }
+
+  async getAccountByEmail(email: string): Promise<Account | null> {
+    const account = await this.prismaClient.account.findUnique({
+      where: { email }
+    });
+
+    return account ? AccountMapper.toDomain(account) : null;
   }
 }
