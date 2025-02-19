@@ -8,6 +8,10 @@ import { booksPath, booksPathWithId } from '@/application/modules/books/docs/boo
 import { createBookOpenAPISchema } from '@/application/modules/books/use-cases/create-book/create-book-dto';
 import { bookHttpSchema } from '@/application/modules/books/use-cases/mappers/book-mapper';
 import { updateBookOpenAPISchema } from '@/application/modules/books/use-cases/update-book/update-book-dto';
+import { loansPath, loansPathWithId } from '@/application/modules/loans/docs/loans-path';
+import { createLoanOpenAPISchema } from '@/application/modules/loans/use-cases/create-loan/create-loan-dto';
+import { loanHttpSchema } from '@/application/modules/loans/use-cases/mappers/loan-mapper';
+import { updateLoanOpenAPISchema } from '@/application/modules/loans/use-cases/update-loan/update-loan-dto';
 import { Express } from 'express';
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
@@ -17,7 +21,18 @@ const options: swaggerJsdoc.Options = {
   definition: {
     openapi: '3.1.0',
     tags: [
-      { name: Tags.ACCOUNTS }, { name: Tags.BOOKS }, { name: Tags.LOANS }
+      {
+        name: Tags.ACCOUNTS,
+        description: 'Endpoints relacionados a contas de usuários',
+      },
+       {
+        name: Tags.BOOKS,
+        description: 'Endpoints relacionados a livros',
+      },
+      {
+        name: Tags.LOANS,
+        description: 'Endpoints relacionados a empréstimos',
+      }
     ],
     components: {
       securitySchemes: {
@@ -34,6 +49,9 @@ const options: swaggerJsdoc.Options = {
         CreateBook: createBookOpenAPISchema,
         UpdateBook: updateBookOpenAPISchema,
         BookResponse: bookHttpSchema,
+        CreateLoan: createLoanOpenAPISchema,
+        UpdateLoan: updateLoanOpenAPISchema,
+        LoanResponse: loanHttpSchema,
       }
     },
     info: {
@@ -52,6 +70,8 @@ const options: swaggerJsdoc.Options = {
       '/accounts/{accountId}': accountPathWithId,
       '/books': booksPath,
       '/books/{bookId}': booksPathWithId,
+      '/loans': loansPath,
+      '/loans/{loanId}': loansPathWithId,
     }
   },
   apis: [],

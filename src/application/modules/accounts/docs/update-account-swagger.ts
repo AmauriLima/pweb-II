@@ -36,6 +36,9 @@ export const updateAccountSwagger: Operation = {
     '400': {
       description: 'Erro de validação',
     },
+    '404': {
+      description: 'Conta não encontrada',
+    },
     '409': {
       description: 'Já existe uma conta com esse email',
     }

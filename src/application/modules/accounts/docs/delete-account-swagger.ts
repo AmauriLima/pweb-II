@@ -26,5 +26,8 @@ export const deleteAccountSwagger: Operation = {
     '400': {
       description: 'Erro de validação',
     },
+    '404': {
+      description: 'Conta não encontrada',
+    },
   },
 }

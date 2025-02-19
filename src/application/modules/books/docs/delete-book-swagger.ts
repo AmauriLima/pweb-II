@@ -26,5 +26,8 @@ export const deleteBookSwagger: Operation = {
     '400': {
       description: 'Erro de validação',
     },
+    '404': {
+      description: 'Livro não encontrado',
+    },
   },
 }
