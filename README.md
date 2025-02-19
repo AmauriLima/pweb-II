@@ -29,3 +29,31 @@ Uma API completa para gerenciar o acervo de uma biblioteca, leitores cadastrados
 ## Dupla de Desenvolvimento
 - Amauri Pereira de Lima Júnior  
 - Anderson de Lima Leite
+
+# Rodando como desenvolvedor
+
+1. Clone o repositório e instale as dependências:
+
+   ```bash
+   $ git clone git@github.com:AmauriLima/pwebII.git
+   $ cd pwebII
+   $ pnpm install
+   ```
+
+2. To run the project in development mode, start a development database:
+
+   ```bash
+   $ pnpm db:up
+   ```
+
+3. Apply the current schema (if the database is not up-to-date):
+
+   ```bash
+   $ pnpm db:migrate:dev
+   ```
+
+4. Start the server in development mode:
+
+   ```bash
+   $ yarn dev
+   ```
