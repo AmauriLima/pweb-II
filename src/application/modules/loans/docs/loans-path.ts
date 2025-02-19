@@ -1,7 +1,7 @@
 import { PathItem } from "swagger-jsdoc";
+import { closeLoanSwagger } from "./close-loans-swagger";
 import { createLoanSwagger } from "./create-loan-swagger";
 import { getLoansSwagger } from "./get-loans-swagger";
-import { updateLoanSwagger } from "./update-loan-swagger";
 
 
 export const loansPath: PathItem = {
@@ -10,7 +10,7 @@ export const loansPath: PathItem = {
 }
 
 export const loansPathWithId: PathItem = {
-  put: updateLoanSwagger,
+  patch: closeLoanSwagger,
 }
 
 

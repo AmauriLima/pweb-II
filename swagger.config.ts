@@ -11,7 +11,6 @@ import { updateBookOpenAPISchema } from '@/application/modules/books/use-cases/u
 import { loansPath, loansPathWithId } from '@/application/modules/loans/docs/loans-path';
 import { createLoanOpenAPISchema } from '@/application/modules/loans/use-cases/create-loan/create-loan-dto';
 import { loanHttpSchema } from '@/application/modules/loans/use-cases/mappers/loan-mapper';
-import { updateLoanOpenAPISchema } from '@/application/modules/loans/use-cases/update-loan/update-loan-dto';
 import { Express } from 'express';
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
@@ -50,7 +49,6 @@ const options: swaggerJsdoc.Options = {
         UpdateBook: updateBookOpenAPISchema,
         BookResponse: bookHttpSchema,
         CreateLoan: createLoanOpenAPISchema,
-        UpdateLoan: updateLoanOpenAPISchema,
         LoanResponse: loanHttpSchema,
       }
     },
