@@ -5,12 +5,12 @@ import { accountHttpSchema } from '@/application/modules/accounts/mappers/accoun
 import { createAccountOpenAPISchema } from '@/application/modules/accounts/use-cases/create-account/create-account-dto';
 import { updateAccountOpenAPISchema } from '@/application/modules/accounts/use-cases/update-account/update-account-dto';
 import { booksPath, booksPathWithId } from '@/application/modules/books/docs/books-path';
+import { bookHttpSchema } from '@/application/modules/books/mappers/book-mapper';
 import { createBookOpenAPISchema } from '@/application/modules/books/use-cases/create-book/create-book-dto';
-import { bookHttpSchema } from '@/application/modules/books/use-cases/mappers/book-mapper';
 import { updateBookOpenAPISchema } from '@/application/modules/books/use-cases/update-book/update-book-dto';
 import { loansPath, loansPathWithId } from '@/application/modules/loans/docs/loans-path';
+import { loanHttpSchema } from '@/application/modules/loans/mappers/loan-mapper';
 import { createLoanOpenAPISchema } from '@/application/modules/loans/use-cases/create-loan/create-loan-dto';
-import { loanHttpSchema } from '@/application/modules/loans/use-cases/mappers/loan-mapper';
 import { updateLoanOpenAPISchema } from '@/application/modules/loans/use-cases/update-loan/update-loan-dto';
 import { Express } from 'express';
 import swaggerJsdoc from 'swagger-jsdoc';
