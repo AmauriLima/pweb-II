@@ -20,7 +20,7 @@ export const updateAccountSwagger: Operation = {
     required: true,
     content: {
       'application/json': {
-        schema: { $ref: '#/components/schemas/CreateAccount' },
+        schema: { $ref: '#/components/schemas/UpdateAccount' },
       },
     },
   },

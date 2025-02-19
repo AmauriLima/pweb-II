@@ -3,6 +3,11 @@ import { env } from '@/application/config/env';
 import { accountPathWithId, accountsPath } from '@/application/modules/accounts/docs/accounts-path';
 import { accountHttpSchema } from '@/application/modules/accounts/mappers/account-mapper';
 import { createAccountOpenAPISchema } from '@/application/modules/accounts/use-cases/create-account/create-account-dto';
+import { updateAccountOpenAPISchema } from '@/application/modules/accounts/use-cases/update-account/update-account-dto';
+import { booksPath, booksPathWithId } from '@/application/modules/books/docs/books-path';
+import { createBookOpenAPISchema } from '@/application/modules/books/use-cases/create-book/create-book-dto';
+import { bookHttpSchema } from '@/application/modules/books/use-cases/mappers/book-mapper';
+import { updateBookOpenAPISchema } from '@/application/modules/books/use-cases/update-book/update-book-dto';
 import { Express } from 'express';
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
@@ -24,7 +29,11 @@ const options: swaggerJsdoc.Options = {
       },
       schemas: {
         CreateAccount: createAccountOpenAPISchema,
+        UpdateAccount: updateAccountOpenAPISchema,
         AccountResponse: accountHttpSchema,
+        CreateBook: createBookOpenAPISchema,
+        UpdateBook: updateBookOpenAPISchema,
+        BookResponse: bookHttpSchema,
       }
     },
     info: {
@@ -41,6 +50,8 @@ const options: swaggerJsdoc.Options = {
     paths: {
       '/accounts': accountsPath,
       '/accounts/{accountId}': accountPathWithId,
+      '/books': booksPath,
+      '/books/{bookId}': booksPathWithId,
     }
   },
   apis: [],
