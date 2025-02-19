@@ -1,0 +1,13 @@
+model Book {
+  id          String @id @default(uuid()) @db.Uuid
+  name        String
+  description String
+  coverUrl    String @map("cover_url")
+  totalAmount Int    @default(0)
+  loanAmount  Int    @default(0)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map("books")
+}
