@@ -1,5 +1,5 @@
 import { PathItem } from "swagger-jsdoc";
-import { closeLoanSwagger } from "./close-loans-swagger";
+import { closeLoanSwagger } from "./close-loan-swagger";
 import { createLoanSwagger } from "./create-loan-swagger";
 import { getLoansSwagger } from "./get-loans-swagger";
 
