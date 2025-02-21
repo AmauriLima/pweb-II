@@ -39,7 +39,7 @@ export class UpdateBookUseCase implements IUseCase<IInput, IOutput> {
 
       return { updatedBook };
     } catch {
-      throw new InternalServerHTTPError('Erro ao atualizar usuário');
+      throw new InternalServerHTTPError('Erro ao atualizar livro');
     }
   }
 }
