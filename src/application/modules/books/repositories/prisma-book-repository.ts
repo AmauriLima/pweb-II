@@ -13,4 +13,10 @@ export class PrismaBookRepository implements BookRepository {
       data: BookMapper.toPersistence(book),
     })
   }
+
+  async getBooks(): Promise<Book[]> {
+    const books = await this.prisma.book.findMany();
+
+    return books.map(BookMapper.toDomain);
+  }
 }
