@@ -12,6 +12,7 @@ model Loan {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
 
+  @@unique([accountId, bookId, returnDate])
   @@index([accountId], name: "loan_account_id")
   @@index([bookId], name: "loan_book_id")
   @@index([accountId, bookId, returnDate], name: "loan_book_account_id")

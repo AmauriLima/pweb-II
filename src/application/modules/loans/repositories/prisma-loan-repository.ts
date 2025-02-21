@@ -13,6 +13,13 @@ export class PrismaLoanRepository implements LoanRepository {
     });
   }
 
+  async updateLoan(loan: Loan): Promise<void> {
+    await this.prisma.loan.update({
+      where: { id: loan.id },
+      data: LoanMapper.toPersistence(loan),
+    });
+  }
+
   async getLoans(): Promise<Loan[]> {
     const loans = await this.prisma.loan.findMany();
     return loans.map(LoanMapper.toDomain);
@@ -27,13 +34,25 @@ export class PrismaLoanRepository implements LoanRepository {
   }
 
   async hasPendentLoan(accountId: string, bookId: string): Promise<boolean> {
-    const loans = await this.prisma.loan.findMany({
-      where: { accountId, bookId, returnDate: null },
-      take: 1,
+    const loan = await this.prisma.loan.findFirst({
+      where: {
+        accountId,
+        bookId,
+        returnDate: null
+       },
       select: { id: true }
     });
 
-    return loans.length !== 0;
+    return !!loan;
   }
 
+  async getLoanById(loanId: string): Promise<Loan | null> {
+    const loan = await this.prisma.loan.findUnique({
+      where: {
+        id: loanId
+      }
+    });
+
+    return loan ? LoanMapper.toDomain(loan) : null;
+  }
 }

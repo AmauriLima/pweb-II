@@ -14,7 +14,7 @@ export const closeLoanSwagger: Operation = {
       },
     }
   ],
-  summary: 'Fecha um empréstimo (Em desenvolvimento)',
+  summary: 'Fecha um empréstimo',
   description: 'Atualiza um empréstimo e retorna os dados do empréstimo atualizado',
   responses: {
     '201': {
