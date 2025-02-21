@@ -3,7 +3,7 @@ import { Operation } from "swagger-jsdoc";
 
 export const createBookSwagger: Operation = {
   tags: [Tags.BOOKS],
-  summary: 'Cria um novo livro (Em desenvolvimento)',
+  summary: 'Cria um novo livro',
   description: 'Cria um livro novo e retorna os dados do livro cadastrada',
   requestBody: {
     required: true,
