@@ -3,7 +3,7 @@ import { NotFoundHTTPError } from "@/application/shared/http/errors/not-found-ht
 import { IUseCase } from "@/application/shared/http/interfaces/use-case";
 import { BookRepository } from "../../repositories/book-repository";
 
-type IInput = {
+interface IInput {
   bookId: string;
 };
 
