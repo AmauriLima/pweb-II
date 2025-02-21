@@ -24,7 +24,7 @@ export class RemoveBookUsecase implements IUseCase<IInput, IOutput> {
     try {
       await this.bookRepo.removeBook(bookId);
     } catch {
-      throw new InternalServerHTTPError('Erro ao excluir usuário');
+      throw new InternalServerHTTPError('Erro ao excluir livro');
     }
 
   }
