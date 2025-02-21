@@ -1,5 +1,10 @@
 import { Tags } from "@/@types/tags";
 import { Operation } from "swagger-jsdoc";
+import { ACCOUNT_NOT_FOUND_ERROR } from "../../accounts/docs/update-account-swagger";
+
+export const CREATE_LOAN_ERROR = 'Erro ao criar empréstimo';
+export const BOOK_OUT_ERROR = 'Livro sem estoque!';
+export const LOAN_IN_PROGRESS_ERROR = 'Você já tem um empréstimo desse livro em andamento, devolva primeiro para poder fazer outro';
 
 export const createLoanSwagger: Operation = {
   tags: [Tags.LOANS],
@@ -37,10 +42,10 @@ export const createLoanSwagger: Operation = {
           schema: { $ref: '#/components/schemas/MultipleErrorsResponse' },
           examples: {
             'Livro não encontrado': {
-              value: { messages: ['Livro não encontrado!'] }
+              value: { messages: [BOOK_OUT_ERROR] }
             },
             'Usuário não encontrado': {
-              value: { messages: ['Usuário não encontrado'] }
+              value: { messages: [ACCOUNT_NOT_FOUND_ERROR] }
             }
           }
         }
@@ -53,14 +58,27 @@ export const createLoanSwagger: Operation = {
           schema: { $ref: '#/components/schemas/MultipleErrorsResponse' },
           examples: {
             'Livro sem estoque': {
-              value: { messages: ['Livro sem estoque'] }
+              value: { messages: [BOOK_OUT_ERROR] }
             },
             'Empréstimo em andamento': {
-              value: { messages: ['Já existe um empréstimo desse livro pra esse usuário em andamento'] }
+              value: { messages: [LOAN_IN_PROGRESS_ERROR] }
             }
           }
         }
       }
     },
+    '500': {
+      description: 'Erro interno do servidor',
+      content: {
+        'application/json': {
+          schema: { $ref: '#/components/schemas/ErrorsResponse' },
+          examples: {
+            'Erro ao criar': {
+              value: { messages: [CREATE_LOAN_ERROR] }
+            }
+          }
+        },
+      },
+    }
   },
 }

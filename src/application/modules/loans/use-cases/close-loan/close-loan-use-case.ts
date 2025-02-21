@@ -2,6 +2,7 @@ import { BookOperation, BookRepository } from "@/application/modules/books/repos
 import { InternalServerHTTPError } from "@/application/shared/http/errors/internal-server-http-error";
 import { NotFoundHTTPError } from "@/application/shared/http/errors/not-found-http-error";
 import { IUseCase } from "@/application/shared/http/interfaces/use-case";
+import { CLOSE_LOAN_ERROR, LOAN_ALREADY_CLOSED, LOAN_NOT_FOUND } from "../../docs/close-loan-swagger";
 import { Loan } from "../../entities/loan";
 import { LoanRepository } from "../../repositories/loan-repository";
 
@@ -23,11 +24,11 @@ export class CloseLoanUseCase implements IUseCase<IInput, IOutput> {
     const loan = await this.loanRepo.getLoanById(loanId);
 
     if (!loan) {
-      throw new NotFoundHTTPError('Empréstimo não encontrado!');
+      throw new NotFoundHTTPError(LOAN_NOT_FOUND);
     }
 
     if (loan.returnDate) {
-      throw new NotFoundHTTPError('Esse empréstimo já foi entregue!');
+      throw new NotFoundHTTPError(LOAN_ALREADY_CLOSED);
     }
 
     loan.returnDate = new Date();
@@ -43,7 +44,7 @@ export class CloseLoanUseCase implements IUseCase<IInput, IOutput> {
         updatedLoan: loan,
       }
     } catch {
-      throw new InternalServerHTTPError('Erro ao fechar empréstimo');
+      throw new InternalServerHTTPError(CLOSE_LOAN_ERROR);
     }
 
   }
