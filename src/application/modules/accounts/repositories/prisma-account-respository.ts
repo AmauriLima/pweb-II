@@ -9,6 +9,13 @@ export class PrismaAccountRepository implements AccountRepository {
     private readonly prismaClient: PrismaClient
   ) {}
 
+  async updateAccount(account: Account): Promise<void> {
+    await this.prismaClient.account.update({
+      where: { id: account.id },
+      data: AccountMapper.toPersistence(account)
+    });
+  }
+
   async getAccountById(accountId: string): Promise<Account | null> {
     const account = await this.prismaClient.account.findUnique({
       where: { id: accountId }

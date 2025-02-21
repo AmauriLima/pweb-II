@@ -6,4 +6,5 @@ export interface AccountRepository {
   getAccountById(accountId: string): Promise<Account | null>;
   getAccountByEmail(email: string): Promise<Account | null>;
   removeAccount(accountId: string): Promise<void>;
+  updateAccount(account: Account): Promise<void>;
 }

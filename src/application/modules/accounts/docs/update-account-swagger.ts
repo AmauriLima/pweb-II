@@ -14,7 +14,7 @@ export const updateAccountSwagger: Operation = {
       },
     }
   ],
-  summary: 'Atualiza uma conta (Em desenvolvimento)',
+  summary: 'Atualiza uma conta',
   description: 'Atualiza uma conta e retorna os dados da conta atualizada',
   requestBody: {
     required: true,
