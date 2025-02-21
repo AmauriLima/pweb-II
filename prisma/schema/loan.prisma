@@ -14,6 +14,6 @@ model Loan {
 
   @@index([accountId], name: "loan_account_id")
   @@index([bookId], name: "loan_book_id")
-  @@index([accountId, bookId], name: "loan_book_account_id")
+  @@index([accountId, bookId, returnDate], name: "loan_book_account_id")
   @@map("loans")
 }

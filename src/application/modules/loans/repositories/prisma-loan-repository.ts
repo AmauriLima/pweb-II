@@ -21,7 +21,7 @@ export class PrismaLoanRepository implements LoanRepository {
 
   async getLoansByAccountAndBook(accountId: string, bookId: string): Promise<Loan[]> {
     const loans = await this.prisma.loan.findMany({
-      where: { accountId, bookId },
+      where: { accountId, bookId, returnDate: null },
     });
 
     return loans.map(LoanMapper.toDomain)
