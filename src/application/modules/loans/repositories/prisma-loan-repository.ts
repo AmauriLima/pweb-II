@@ -7,7 +7,6 @@ export class PrismaLoanRepository implements LoanRepository {
   constructor(
     private readonly prisma: PrismaClient,
   ) {}
-
   async createLoan(loan: Loan): Promise<void> {
     await this.prisma.loan.create({
       data: LoanMapper.toPersistence(loan),
@@ -21,9 +20,20 @@ export class PrismaLoanRepository implements LoanRepository {
 
   async getLoansByAccountAndBook(accountId: string, bookId: string): Promise<Loan[]> {
     const loans = await this.prisma.loan.findMany({
-      where: { accountId, bookId, returnDate: null },
+      where: { accountId, bookId },
     });
 
     return loans.map(LoanMapper.toDomain)
   }
+
+  async hasPendentLoan(accountId: string, bookId: string): Promise<boolean> {
+    const loans = await this.prisma.loan.findMany({
+      where: { accountId, bookId, returnDate: null },
+      take: 1,
+      select: { id: true }
+    });
+
+    return loans.length !== 0;
+  }
+
 }

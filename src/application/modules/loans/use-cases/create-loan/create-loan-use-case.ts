@@ -29,11 +29,9 @@ export class CreateLoanUseCase implements IUseCase<IInput, IOutput> {
       throw new ConflictHTTPError('Livro sem estoque!');
     }
 
-    const loans = await this.loanRepo.getLoansByAccountAndBook(input.accountId, input.bookId);
+    const hasPendentLoan = await this.loanRepo.hasPendentLoan(input.accountId, input.bookId);
 
-    const loanNotReturned = loans.find((loan) => loan.returnDate === null);
-
-    if (loanNotReturned) {
+    if (hasPendentLoan) {
       throw new ConflictHTTPError(
         'Você já tem um empréstimo desse livro em andamento, devolva primeiro para poder fazer outro'
       );
