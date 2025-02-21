@@ -17,7 +17,7 @@ export const deleteAccountSwagger: Operation = {
       },
     }
   ],
-  summary: 'Remove uma conta (Em desenvolvimento)',
+  summary: 'Remove uma conta',
   description: 'Está operação ainda não foi implementada',
   responses: {
     '204': {

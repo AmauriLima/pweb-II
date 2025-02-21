@@ -8,6 +8,21 @@ export class PrismaAccountRepository implements AccountRepository {
   constructor(
     private readonly prismaClient: PrismaClient
   ) {}
+
+  async getAccountById(accountId: string): Promise<Account | null> {
+    const account = await this.prismaClient.account.findUnique({
+      where: { id: accountId }
+    });
+
+    return account ? AccountMapper.toDomain(account) : null;
+  }
+
+  async removeAccount(accountId: string): Promise<void> {
+    await this.prismaClient.account.delete({
+      where: { id: accountId }
+    })
+  }
+
   async createAccount(account: Account): Promise<void> {
     await this.prismaClient.account.create({
       data: AccountMapper.toPersistence(account)
