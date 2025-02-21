@@ -14,7 +14,7 @@ export const updateBookSwagger: Operation = {
       },
     }
   ],
-  summary: 'Atualiza um livro (Em desenvolvimento)',
+  summary: 'Atualiza um livro',
   description: 'Atualiza um livro e retorna os dados do livro atualizado',
   requestBody: {
     required: true,

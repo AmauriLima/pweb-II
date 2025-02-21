@@ -1,5 +1,6 @@
-import { Book } from "../../../entities/book";
-import { BookRepository } from "../../../repositories/book-repository";
+import { Book } from "../../entities/book";
+import { BookRepository } from "../../repositories/book-repository";
+
 
 type Input = void;
 interface Output {

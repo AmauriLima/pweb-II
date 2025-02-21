@@ -16,7 +16,27 @@ export class PrismaBookRepository implements BookRepository {
 
   async getBooks(): Promise<Book[]> {
     const books = await this.prisma.book.findMany();
-
     return books.map(BookMapper.toDomain);
+  }
+
+  async getBookById(bookId: string): Promise<Book | null> {
+    const book = await this.prisma.book.findUnique({
+      where: { id: bookId },
+    });
+
+    return book ? BookMapper.toDomain(book) : null;
+  }
+
+  async updateBook(book: Book): Promise<void> {
+    await this.prisma.book.update({
+      where: { id: book.id },
+      data: BookMapper.toPersistence(book),
+    });
+  }
+
+  async removeBook(bookId: string): Promise<void> {
+    await this.prisma.book.delete({
+      where: { id: bookId },
+    });
   }
 }

@@ -3,7 +3,7 @@ import { Operation } from "swagger-jsdoc";
 
 export const getLoansSwagger: Operation = {
   tags: [Tags.LOANS],
-  summary: 'Lista todos os empréstimos (Em desenvolvimento)',
+  summary: 'Lista todos os empréstimos',
   description: 'Retorna uma lista com todos os empréstimos cadastrados',
   responses: {
     '200': {

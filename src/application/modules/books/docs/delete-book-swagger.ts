@@ -17,7 +17,7 @@ export const deleteBookSwagger: Operation = {
       },
     }
   ],
-  summary: 'Remove um livro (Em desenvolvimento)',
+  summary: 'Remove um livro',
   description: 'Está operação ainda não foi implementada',
   responses: {
     '204': {
