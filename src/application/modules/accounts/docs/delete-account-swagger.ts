@@ -6,9 +6,6 @@ export const REMOVE_ACCOUNT_ERROR = 'Erro ao excluir usuário!';
 
 export const deleteAccountSwagger: Operation = {
   tags: [Tags.ACCOUNTS],
-  security: [
-    { BearerAuth: [] }
-  ],
   parameters: [
     {
       name: 'accountId',
