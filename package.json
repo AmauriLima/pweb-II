@@ -8,9 +8,9 @@
     "dev": "tsx watch src/index.ts --ignore prisma/seed.ts",
     "db:push": "pnpm prisma db push",
     "db:migrate:dev": "pnpm prisma migrate dev",
-    "db:up": "docker-compose up -d",
-    "db:stop": "docker-compose stop",
-    "db:down": "docker-compose down"
+    "db:up": "docker compose up -d",
+    "db:stop": "docker compose stop",
+    "db:down": "docker compose down"
   },
   "keywords": [],
   "author": "",
