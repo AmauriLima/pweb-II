@@ -6,7 +6,6 @@ export const updateBookSchema = z.object({
   description: z.string().min(1, 'Nome é obrigatório').optional(),
   coverUrl: z.string().url('Formato de url inválida').optional(),
   totalAmount: z.number().optional(),
-  loanAmount: z.number().optional(),
 });
 
 export const updateBookOpenAPISchema = generateSchema(updateBookSchema);

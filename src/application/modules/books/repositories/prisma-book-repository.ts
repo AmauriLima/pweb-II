@@ -1,12 +1,23 @@
 import { PrismaClient } from "@prisma/client";
 import { Book } from "../entities/book";
 import { BookMapper } from "../mappers/book-mapper";
-import { BookRepository } from "./book-repository";
+import { BookOperation, BookRepository } from "./book-repository";
 
 export class PrismaBookRepository implements BookRepository {
   constructor(
     private readonly prisma: PrismaClient,
   ) {}
+
+  async changeBookLoanAmount(book: Book, operation: BookOperation): Promise<void> {
+    await this.prisma.book.update({
+      where: { id: book.id },
+      data: {
+        loanAmount: operation === BookOperation.LOAN
+          ? book.loanAmount + 1
+          : book.loanAmount - 1
+      }
+    });
+  }
 
   async createBook(book: Book): Promise<void> {
     await this.prisma.book.create({

@@ -1,9 +1,9 @@
+import { InternalServerHTTPError } from "@/application/shared/http/errors/internal-server-http-error";
 import { NotFoundHTTPError } from "@/application/shared/http/errors/not-found-http-error";
 import { IUseCase } from "@/application/shared/http/interfaces/use-case";
+import { Book } from "../../entities/book";
 import { BookRepository } from "../../repositories/book-repository";
 import { UpdateBookSchema } from "./update-book-dto";
-import { InternalServerHTTPError } from "@/application/shared/http/errors/internal-server-http-error";
-import { Book } from "../../entities/book";
 
 type IInput =  UpdateBookSchema & {
     bookId: string;
@@ -29,9 +29,9 @@ export class UpdateBookUseCase implements IUseCase<IInput, IOutput> {
       id: book.id,
       name: input.name || book.name,
       description: input.description || book.description,
-        coverUrl: input.coverUrl || book.coverUrl,
-        totalAmount: input.totalAmount || book.totalAmount,
-        loanAmount: input.loanAmount || book.loanAmount,
+      coverUrl: input.coverUrl || book.coverUrl,
+      totalAmount: input.totalAmount || book.totalAmount,
+      loanAmount: book.loanAmount,
     });
 
     try {

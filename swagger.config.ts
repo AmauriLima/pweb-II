@@ -51,6 +51,24 @@ const options: swaggerJsdoc.Options = {
         BookResponse: bookHttpSchema,
         CreateLoan: createLoanOpenAPISchema,
         LoanResponse: loanHttpSchema,
+        ErrorsResponse: {
+          type: 'object',
+          properties: {
+            messages: {
+              type: 'array',
+              items: {
+                type: 'string',
+              },
+              description: 'Mensagems de erro'
+            }
+          }
+        },
+        MultipleErrorsResponse: {
+          oneOf: [
+            { $ref: '#/components/schemas/ErrorsResponse' }
+          ],
+          description: 'Possíveis mensagens de erro'
+        }
       }
     },
     info: {

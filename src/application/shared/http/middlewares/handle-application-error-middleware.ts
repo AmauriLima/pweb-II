@@ -21,7 +21,7 @@ export class HandleApplicationErrorMiddleware implements IErrorMiddleware {
       return {
         statusCode: IHttpStatusCode.BAD_REQUEST,
         body: {
-          message: zodErrorMessages,
+          messages: zodErrorMessages,
         }
       };
     }
@@ -30,7 +30,7 @@ export class HandleApplicationErrorMiddleware implements IErrorMiddleware {
       return {
         statusCode: error.statusCode,
         body: {
-          message: error.message,
+          messages: [error.message],
         }
       };
     }
@@ -39,7 +39,7 @@ export class HandleApplicationErrorMiddleware implements IErrorMiddleware {
       return {
         statusCode: IHttpStatusCode.INTERNAL_SERVER_ERROR,
         body: {
-          message: error.message,
+          messages: [error.message],
         }
       };
     }
@@ -47,7 +47,7 @@ export class HandleApplicationErrorMiddleware implements IErrorMiddleware {
     return {
       statusCode: IHttpStatusCode.INTERNAL_SERVER_ERROR,
       body: {
-        message: 'Erro desconhecido'
+        messages: ['Erro desconhecido']
       }
     };
   }
