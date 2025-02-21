@@ -1,6 +1,8 @@
 import { InternalServerHTTPError } from "@/application/shared/http/errors/internal-server-http-error";
 import { NotFoundHTTPError } from "@/application/shared/http/errors/not-found-http-error";
 import { IUseCase } from "@/application/shared/http/interfaces/use-case";
+import { BOOK_NOT_FOUND_ERROR } from "../../docs/delete-book-swagger";
+import { UPDATE_BOOK_ERROR } from "../../docs/update-book-swagger";
 import { Book } from "../../entities/book";
 import { BookRepository } from "../../repositories/book-repository";
 import { UpdateBookSchema } from "./update-book-dto";
@@ -22,7 +24,7 @@ export class UpdateBookUseCase implements IUseCase<IInput, IOutput> {
     const book = await this.bookRepo.getBookById(bookId);
 
     if (!book) {
-      throw new NotFoundHTTPError('Livro não encontrado!');
+      throw new NotFoundHTTPError(BOOK_NOT_FOUND_ERROR);
     }
 
     const updatedBook = new Book({
@@ -39,7 +41,7 @@ export class UpdateBookUseCase implements IUseCase<IInput, IOutput> {
 
       return { updatedBook };
     } catch {
-      throw new InternalServerHTTPError('Erro ao atualizar livro');
+      throw new InternalServerHTTPError(UPDATE_BOOK_ERROR);
     }
   }
 }

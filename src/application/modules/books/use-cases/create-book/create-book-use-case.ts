@@ -1,5 +1,6 @@
 import { InternalServerHTTPError } from "@/application/shared/http/errors/internal-server-http-error";
 import { IUseCase } from "@/application/shared/http/interfaces/use-case";
+import { CREATE_BOOK_ERROR } from "../../docs/create-book-swagger";
 import { Book } from "../../entities/book";
 import { BookRepository } from "../../repositories/book-repository";
 import { CreateBookSchema } from "./create-book-dto";
@@ -30,7 +31,7 @@ export class CreateBookUseCase implements IUseCase<IInput, IOutput> {
         book,
       }
     } catch {
-      throw new InternalServerHTTPError('Erro ao criar livro');
+      throw new InternalServerHTTPError(CREATE_BOOK_ERROR);
     }
   }
 }

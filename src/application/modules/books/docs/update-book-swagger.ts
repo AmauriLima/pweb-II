@@ -1,5 +1,8 @@
 import { Tags } from "@/@types/tags";
 import { Operation } from "swagger-jsdoc";
+import { BOOK_NOT_FOUND_ERROR } from "./delete-book-swagger";
+
+export const UPDATE_BOOK_ERROR = 'Erro ao atualizar livro';
 
 export const updateBookSwagger: Operation = {
   tags: [Tags.BOOKS],
@@ -38,6 +41,30 @@ export const updateBookSwagger: Operation = {
     },
     '404': {
       description: 'Livro não encontrado',
+      content: {
+        'application/json': {
+          schema: { $ref: '#/components/schemas/ErrorsResponse' },
+          examples: {
+            'Erro ao atualizar': {
+              value: { messages: [BOOK_NOT_FOUND_ERROR] }
+            }
+          }
+        },
+      },
     },
+    '500': {
+      description: 'Erro interno do servidor',
+      content: {
+        'application/json': {
+          schema: { $ref: '#/components/schemas/ErrorsResponse' },
+          examples: {
+            'Erro ao atualizar': {
+              value: { messages: [UPDATE_BOOK_ERROR] }
+            }
+          }
+        },
+      },
+    }
   },
+
 }
