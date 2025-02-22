@@ -1,4 +1,6 @@
+import { InternalServerHTTPError } from "@/application/shared/http/errors/internal-server-http-error";
 import { IUseCase } from "@/application/shared/http/interfaces/use-case";
+import { GET_ACCOUNTS_ERROR } from "../../docs/get-accounts-swagger";
 import { Account } from "../../entities/account";
 import { AccountRepository } from "../../repositories/account-repository";
 
@@ -13,10 +15,14 @@ export class GetAccountUsecase implements IUseCase<IInput, IOutput> {
   ) {}
 
   async execute(_input: IInput): Promise<IOutput> {
-    const accounts = await this.accountRepo.getAccounts();
+    try {
+      const accounts = await this.accountRepo.getAccounts();
 
-    return {
-      accounts
+      return {
+        accounts
+      }
+    } catch {
+      throw new InternalServerHTTPError(GET_ACCOUNTS_ERROR);
     }
   }
 }

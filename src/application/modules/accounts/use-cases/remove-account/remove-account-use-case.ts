@@ -1,6 +1,7 @@
 import { InternalServerHTTPError } from "@/application/shared/http/errors/internal-server-http-error";
 import { NotFoundHTTPError } from "@/application/shared/http/errors/not-found-http-error";
 import { IUseCase } from "@/application/shared/http/interfaces/use-case";
+import { ACCOUNT_NOT_FOUND_ERROR, REMOVE_ACCOUNT_ERROR } from "../../docs/delete-account-swagger";
 import { AccountRepository } from "../../repositories/account-repository";
 
 type IInput = {
@@ -18,13 +19,13 @@ export class RemoveAccountUsecase implements IUseCase<IInput, IOutput> {
     const account = await this.accountRepo.getAccountById(accountId);
 
     if (!account) {
-      throw new NotFoundHTTPError('Usuário não encontrado');
+      throw new NotFoundHTTPError(ACCOUNT_NOT_FOUND_ERROR);
     }
 
     try {
       await this.accountRepo.removeAccount(accountId);
     } catch {
-      throw new InternalServerHTTPError('Erro ao excluir usuário');
+      throw new InternalServerHTTPError(REMOVE_ACCOUNT_ERROR);
     }
 
   }

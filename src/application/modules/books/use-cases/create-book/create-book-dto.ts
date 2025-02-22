@@ -6,7 +6,6 @@ export const createBookSchema = z.object({
   description: z.string().min(1, 'Nome é obrigatório'),
   coverUrl: z.string().url('Formato de url inválida'),
   totalAmount: z.number().optional().transform(v => v ?? 0),
-  loanAmount: z.number().optional().transform(v => v ?? 0),
 });
 
 export const createBookOpenAPISchema = generateSchema(createBookSchema);

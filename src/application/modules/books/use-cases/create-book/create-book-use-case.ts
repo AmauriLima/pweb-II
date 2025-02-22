@@ -1,6 +1,6 @@
-import { BadRequestHttpError } from "@/application/shared/http/errors/bad-request-http-error";
 import { InternalServerHTTPError } from "@/application/shared/http/errors/internal-server-http-error";
 import { IUseCase } from "@/application/shared/http/interfaces/use-case";
+import { CREATE_BOOK_ERROR } from "../../docs/create-book-swagger";
 import { Book } from "../../entities/book";
 import { BookRepository } from "../../repositories/book-repository";
 import { CreateBookSchema } from "./create-book-dto";
@@ -16,16 +16,12 @@ export class CreateBookUseCase implements IUseCase<IInput, IOutput> {
   ) {}
 
   async execute(input: IInput): Promise<IOutput> {
-    if (input.totalAmount < input.loanAmount) {
-      throw new BadRequestHttpError('Quantidade total de livros não pode ser menos que quantidade emprestada!');
-    }
-
     const book = new Book({
       name: input.name,
       coverUrl: input.coverUrl,
       description: input.description,
-      loanAmount: input.loanAmount,
       totalAmount: input.totalAmount,
+      loanAmount: 0,
     });
 
     try {
@@ -35,7 +31,7 @@ export class CreateBookUseCase implements IUseCase<IInput, IOutput> {
         book,
       }
     } catch {
-      throw new InternalServerHTTPError('Erro ao criar livro');
+      throw new InternalServerHTTPError(CREATE_BOOK_ERROR);
     }
   }
 }

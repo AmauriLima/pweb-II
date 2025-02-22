@@ -1,6 +1,6 @@
 
 export enum Tags {
-  ACCOUNTS = 'Accounts',
-  BOOKS = 'Books',
-  LOANS = 'Loans',
+  ACCOUNTS = 'Usuários',
+  BOOKS = 'Livros',
+  LOANS = 'Empréstimos',
 };

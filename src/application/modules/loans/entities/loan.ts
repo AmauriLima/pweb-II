@@ -30,4 +30,8 @@ export class Loan extends Entity {
   get returnDate(): Date | null {
     return this.props.returnDate ?? null;
   }
+
+  set returnDate(returnDate: Date) {
+    this.props.returnDate = returnDate;
+  }
 }

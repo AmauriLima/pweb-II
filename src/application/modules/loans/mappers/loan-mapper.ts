@@ -38,7 +38,7 @@ export class LoanMapper {
 
   static toHttp(domain: Loan) {
     return {
-      loanId: domain.id,
+      id: domain.id,
       accountId: domain.accountId,
       bookId: domain.bookId,
       dueDate: domain.dueDate,
@@ -51,7 +51,7 @@ export class LoanMapper {
 
 export const loanHttpSchema = generateSchema(
   z.object({
-    loanId: z.string().uuid(),
+    id: z.string().uuid(),
     accountId: z.string().uuid(),
     bookId: z.string().uuid(),
     dueDate: z.string().datetime(),

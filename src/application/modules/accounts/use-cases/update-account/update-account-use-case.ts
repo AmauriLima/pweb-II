@@ -2,6 +2,7 @@ import { ConflictHTTPError } from "@/application/shared/http/errors/conflict-htt
 import { InternalServerHTTPError } from "@/application/shared/http/errors/internal-server-http-error";
 import { NotFoundHTTPError } from "@/application/shared/http/errors/not-found-http-error";
 import { IUseCase } from "@/application/shared/http/interfaces/use-case";
+import { ACCOUNT_NOT_FOUND_ERROR, UPDATE_ACCOUNT_CONFLICT_ERROR, UPDATE_ACCOUNT_ERROR } from "../../docs/update-account-swagger";
 import { Account } from "../../entities/account";
 import { AccountRepository } from "../../repositories/account-repository";
 import { UpdateAccountSchema } from "./update-account-dto";
@@ -14,6 +15,7 @@ interface IOutput {
   updatedAccount: Account;
 }
 
+
 export class UpdateAccountUseCase implements IUseCase<IInput, IOutput> {
   constructor(
     private readonly accountRepo: AccountRepository,
@@ -23,14 +25,14 @@ export class UpdateAccountUseCase implements IUseCase<IInput, IOutput> {
     const account = await this.accountRepo.getAccountById(accountId);
 
     if (!account) {
-      throw new NotFoundHTTPError('Usuário não encontrado!');
+      throw new NotFoundHTTPError(ACCOUNT_NOT_FOUND_ERROR);
     }
 
     if (input.email) {
       const accountByEmail = await this.accountRepo.getAccountByEmail(input.email);
 
       if (accountByEmail && accountByEmail.id !== accountId) {
-        throw new ConflictHTTPError('Já existe um usuário com esse email!');
+        throw new ConflictHTTPError(UPDATE_ACCOUNT_CONFLICT_ERROR);
       }
     }
 
@@ -47,7 +49,7 @@ export class UpdateAccountUseCase implements IUseCase<IInput, IOutput> {
 
       return { updatedAccount };
     } catch {
-      throw new InternalServerHTTPError('Erro ao atualizar usuário');
+      throw new InternalServerHTTPError(UPDATE_ACCOUNT_ERROR);
     }
   }
 }
