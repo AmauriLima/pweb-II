@@ -31,7 +31,6 @@ export class AccountMapper {
       id: domain.id,
       name: domain.name,
       email: domain.email,
-      password: domain.password,
       createdAt: domain.createdAt,
       updatedAt: domain.updatedAt,
     }
@@ -43,7 +42,6 @@ export const accountHttpSchema = generateSchema(
     id: z.string().uuid(),
     name: z.string(),
     email: z.string().email(),
-    password: z.string(),
     createdAt: z.string().datetime(),
     updatedAt: z.string().datetime(),
   })
