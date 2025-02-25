@@ -3,11 +3,14 @@ import { InternalServerHTTPError } from "@/application/shared/http/errors/intern
 import { IUseCase } from "@/application/shared/http/interfaces/use-case";
 import { HashProvider } from "@/application/shared/providers/hash-provider/hash-provider";
 import { CREATE_ACCOUNT_CONFLICT_ERROR, CREATE_ACCOUNT_ERROR } from "../../docs/create-account-swagger";
-import { Account } from "../../entities/account";
+import { Account, Roles } from "../../entities/account";
 import { AccountRepository } from "../../repositories/account-repository";
+import { makeValidateRoleHierarchyUseCase } from "../validate-role-hierarchy/factories/make-validate-role-hierarchy";
 import { CreateAccountSchema } from "./create-account-dto";
 
-type IInput = CreateAccountSchema;
+type IInput = CreateAccountSchema & {
+  accountRole: Roles,
+};
 interface IOutput {
   account: Account;
 };
@@ -18,7 +21,10 @@ export class CreateAccountUseCase implements IUseCase<IInput, IOutput> {
     private readonly hashProvider: HashProvider,
   ) {}
 
-  async execute({ email, name, password, roleCode }: IInput): Promise<IOutput> {
+  async execute({ email, name, password, roleCode, accountRole }: IInput): Promise<IOutput> {
+    const validateRoleHierarchy = makeValidateRoleHierarchyUseCase();
+    await validateRoleHierarchy.execute({ accountRole, roleCode });
+
     const accountAlreadyExists = await this.accountRepo.getAccountByEmail(email);
 
     if (accountAlreadyExists) {

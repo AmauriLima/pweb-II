@@ -8,6 +8,14 @@ export enum Roles {
   USER = 'USER',
 }
 
+export const roleHierarchy: Record<Roles, Roles[]> = {
+  ADMIN: Object.values(Roles),
+  MANAGER: [Roles.BOOK_MANAGER, Roles.USER_MANAGER, Roles.USER],
+  USER_MANAGER: [Roles.USER],
+  BOOK_MANAGER: [],
+  USER: [],
+};
+
 interface IAccountProps extends IEntityProps {
   name: string;
   email: string;

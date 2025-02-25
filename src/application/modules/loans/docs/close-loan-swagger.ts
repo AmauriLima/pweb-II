@@ -37,7 +37,6 @@ export const closeLoanSwagger: Operation = {
         },
       },
     },
-    '401': { $ref: '#/components/responses/UnauthorizedError' },
     '404': {
       description: 'Empréstimo não encontrado',
       content: {

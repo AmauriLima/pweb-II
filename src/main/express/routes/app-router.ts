@@ -8,7 +8,9 @@ import { loanRouter } from "./loan-router";
 
 export const appRouter = Router();
 
+const authMiddleware = middlewareAdapter(makeAuthenticationMiddleware());
+
 appRouter.use('/auth', authRouter);
-appRouter.use('/accounts', middlewareAdapter(makeAuthenticationMiddleware()), accountRouter)
-appRouter.use('/books', middlewareAdapter(makeAuthenticationMiddleware()), bookRouter);
-appRouter.use('/loans', middlewareAdapter(makeAuthenticationMiddleware()), loanRouter);
+appRouter.use('/accounts', authMiddleware, accountRouter);
+appRouter.use('/books', authMiddleware, bookRouter);
+appRouter.use('/loans', authMiddleware, loanRouter);

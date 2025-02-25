@@ -34,7 +34,6 @@ export const deleteBookSwagger: Operation = {
         },
       },
     },
-    '401': { $ref: '#/components/responses/UnauthorizedError' },
     '404': {
       description: 'Livro não encontrado',
       content: {

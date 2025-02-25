@@ -39,7 +39,6 @@ export const updateBookSwagger: Operation = {
     '400': {
       description: 'Erro de validação',
     },
-    '401': { $ref: '#/components/responses/UnauthorizedError' },
     '404': {
       description: 'Livro não encontrado',
       content: {
