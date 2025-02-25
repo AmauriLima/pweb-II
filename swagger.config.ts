@@ -15,6 +15,7 @@ import { loansPath, loansPathWithId } from '@/application/modules/loans/docs/loa
 
 import { loanHttpSchema } from '@/application/modules/loans/mappers/loan-mapper';
 import { createLoanOpenAPISchema } from '@/application/modules/loans/use-cases/create-loan/create-loan-dto';
+import { INVALID_TOKEN_ERROR } from '@/application/shared/http/middlewares/authentication-middleware';
 import { Express } from 'express';
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
@@ -49,6 +50,18 @@ const options: swaggerJsdoc.Options = {
           bearerFormat: 'JWT',
         },
       },
+      responses: {
+        UnauthorizedError: {
+          description: "Token inválido ou não fornecido",
+          content: {
+            "application/json": {
+              example: {
+                message: [INVALID_TOKEN_ERROR],
+              },
+            },
+          },
+        },
+      },
       schemas: {
         SignIn: signInOpenAPISchema,
         SignInResponse: signInHttpSchema,
@@ -68,7 +81,7 @@ const options: swaggerJsdoc.Options = {
               items: {
                 type: 'string',
               },
-              description: 'Mensagems de erro'
+              description: 'Mensagens de erro'
             }
           }
         },
@@ -77,7 +90,7 @@ const options: swaggerJsdoc.Options = {
             { $ref: '#/components/schemas/ErrorsResponse' }
           ],
           description: 'Possíveis mensagens de erro'
-        }
+        },
       }
     },
     info: {
@@ -85,6 +98,11 @@ const options: swaggerJsdoc.Options = {
       version: '1.0.0',
       description: 'Documentação da API utilizando Swagger',
     },
+    security: [
+      {
+        BearerAuth: [],
+      },
+    ],
     servers: [
       {
         url: `http://localhost:${env.port}`,

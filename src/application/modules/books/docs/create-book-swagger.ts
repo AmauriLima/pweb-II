@@ -32,6 +32,7 @@ export const createBookSwagger: Operation = {
         },
       },
     },
+    '401': { $ref: '#/components/responses/UnauthorizedError' },
     '500': {
       description: 'Erro interno do servidor',
       content: {

@@ -16,6 +16,7 @@ export const signInSwagger: Operation = {
   tags: [Tags.AUTH],
   summary: 'Fazer login',
   description: 'Valida e-mail e senha do usuário e retorna um token de acesso',
+  security: [],
   requestBody: {
     required: true,
     content: {

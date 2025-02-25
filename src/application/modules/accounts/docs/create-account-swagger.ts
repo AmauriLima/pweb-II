@@ -33,6 +33,7 @@ export const createAccountSwagger: Operation = {
         },
       },
     },
+    '401': { $ref: '#/components/responses/UnauthorizedError' },
     '409': {
       description: 'Já existe uma conta com esse email',
       content: {

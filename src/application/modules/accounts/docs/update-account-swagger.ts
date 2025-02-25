@@ -46,6 +46,7 @@ export const updateAccountSwagger: Operation = {
         },
       },
     },
+    '401': { $ref: '#/components/responses/UnauthorizedError' },
     '404': {
       description: 'Conta não encontrada',
       content: {
