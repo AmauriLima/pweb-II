@@ -18,7 +18,7 @@ export class CreateAccountUseCase implements IUseCase<IInput, IOutput> {
     private readonly hashProvider: HashProvider,
   ) {}
 
-  async execute({ email, name, password }: IInput): Promise<IOutput> {
+  async execute({ email, name, password, roleCode }: IInput): Promise<IOutput> {
     const accountAlreadyExists = await this.accountRepo.getAccountByEmail(email);
 
     if (accountAlreadyExists) {
@@ -30,6 +30,7 @@ export class CreateAccountUseCase implements IUseCase<IInput, IOutput> {
     const account = new Account({
       name,
       email,
+      roleCode,
       password: encryptedPassword,
     });
 

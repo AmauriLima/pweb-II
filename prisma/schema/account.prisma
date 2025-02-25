@@ -2,46 +2,32 @@ model Account {
   id String @id @default(uuid()) @db.Uuid
 
   name     String
-  email    String  @unique
+  email    String @unique
   password String
-  roleId   String? @map("role_id") @db.Uuid
+  roleCode Roles  @map("role_code")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
 
-  role  Role?  @relation(fields: [roleId], references: [id])
+  role  Role   @relation(fields: [roleCode], references: [code])
   loans Loan[]
 
   @@map("accounts")
 }
 
+enum Roles {
+  ADMIN
+  MANAGER
+  BOOK_MANAGER
+  USER_MANAGER
+  USER
+}
+
 model Role {
   id   String @id @default(uuid()) @db.Uuid
-  name String
+  code Roles  @unique
 
-  accounts    Account[]
-  permissions RolePermission[]
+  accounts Account[]
 
   @@map("roles")
-}
-
-model RolePermission {
-  roleId         String @map("role_id") @db.Uuid
-  permissionCode String @map("permission_code")
-
-  role       Role       @relation(fields: [roleId], references: [id])
-  permission Permission @relation(fields: [permissionCode], references: [code])
-
-  @@id([roleId, permissionCode])
-  @@map("roles_permissions")
-}
-
-model Permission {
-  id   String @id @default(uuid()) @db.Uuid
-  name String
-  code String @unique
-
-  roles RolePermission[]
-
-  @@map("permissions")
 }

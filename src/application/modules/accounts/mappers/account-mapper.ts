@@ -1,7 +1,7 @@
 import { generateSchema } from "@anatine/zod-openapi";
-import { Prisma, Account as RawAccount } from "@prisma/client";
+import { Prisma, Account as RawAccount, Roles as RawRoles } from "@prisma/client";
 import { z } from "zod";
-import { Account } from "../entities/account";
+import { Account, Roles } from "../entities/account";
 
 export class AccountMapper {
   static toPersistence(domain: Account): Prisma.AccountCreateInput {
@@ -9,6 +9,11 @@ export class AccountMapper {
       id: domain.id,
       name: domain.name,
       email: domain.email,
+      role: {
+        connect: {
+          code: domain.roleCode as RawRoles,
+        }
+      },
       password: domain.password,
       createdAt: domain.createdAt,
       updatedAt: domain.updatedAt,
@@ -20,6 +25,7 @@ export class AccountMapper {
       id: data.id,
       name: data.name,
       email: data.email,
+      roleCode: data.roleCode as Roles,
       password: data.password,
       createdAt: data.createdAt,
       updatedAt: data.updatedAt,
@@ -31,6 +37,7 @@ export class AccountMapper {
       id: domain.id,
       name: domain.name,
       email: domain.email,
+      roleCode: domain.roleCode,
       createdAt: domain.createdAt,
       updatedAt: domain.updatedAt,
     }
@@ -42,6 +49,7 @@ export const accountHttpSchema = generateSchema(
     id: z.string().uuid(),
     name: z.string(),
     email: z.string().email(),
+    roleCode: z.nativeEnum(Roles),
     createdAt: z.string().datetime(),
     updatedAt: z.string().datetime(),
   })
