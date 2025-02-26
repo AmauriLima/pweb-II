@@ -1,4 +1,4 @@
-import { randomUUID } from 'node:crypto';
+import { v7 as uuid } from 'uuid';
 
 
 export interface IEntityProps {
@@ -13,7 +13,7 @@ export abstract class Entity {
   private _updatedAt: Date;
 
   constructor(props?: IEntityProps) {
-    this._id = props?.id || randomUUID();
+    this._id = props?.id || uuid();
     this._createdAt = props?.createdAt || new Date();
     this._updatedAt = props?.updatedAt || new Date();
   }

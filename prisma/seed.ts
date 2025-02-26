@@ -29,6 +29,7 @@ async function seed() {
     email: env.admin.email,
     password: env.admin.password,
     roleCode: Roles.ADMIN,
+    accountRole: Roles.ADMIN,
   });
 }
 
