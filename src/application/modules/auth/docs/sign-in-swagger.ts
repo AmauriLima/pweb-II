@@ -5,7 +5,6 @@ import { z } from "zod";
 import { Roles } from "../../accounts/entities/account";
 
 export const INVALID_CREDENTIALS_ERROR = 'Credenciais inválidas';
-export const SIGN_IN_ERROR = 'Erro ao fazer login!';
 
 export const signInHttpSchema = generateSchema(z.object({
   accessToken: z.string().jwt(),
@@ -34,39 +33,14 @@ export const signInSwagger: Operation = {
         },
       },
     },
-    '400': {
-      description: 'Erro de validação',
-      content: {
-        'application/json': {
-          schema: { $ref: '#/components/schemas/ErrorsResponse' },
-        },
-      },
-    },
     '401': {
       description: 'E-mail ou senha inválidos',
       content: {
         'application/json': {
           schema: { $ref: '#/components/schemas/ErrorsResponse' },
-          examples: {
-            'Credenciais inválidas': {
-              value: { messages: [INVALID_CREDENTIALS_ERROR] }
-            }
-          }
+          example: { messages: [INVALID_CREDENTIALS_ERROR] }
         },
       },
     },
-    '500': {
-      description: 'Erro interno do servidor',
-      content: {
-        'application/json': {
-          schema: { $ref: '#/components/schemas/ErrorsResponse' },
-          examples: {
-            'Erro ao logar': {
-              value: { messages: [SIGN_IN_ERROR] }
-            }
-          }
-        },
-      },
-    }
   },
 }

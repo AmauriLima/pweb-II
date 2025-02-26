@@ -6,7 +6,6 @@ import { CREATE_ACCOUNT_CONFLICT_ERROR } from "./create-account-swagger";
 
 export const UPDATE_ACCOUNT_CONFLICT_ERROR = CREATE_ACCOUNT_CONFLICT_ERROR;
 export const ACCOUNT_NOT_FOUND_ERROR = 'Usuário não encontrado!';
-export const UPDATE_ACCOUNT_ERROR = 'Erro ao atualizar usuário';
 
 export const updateAccountSwagger: Operation = {
   tags: [Tags.ACCOUNTS],
@@ -40,14 +39,6 @@ export const updateAccountSwagger: Operation = {
         },
       },
     },
-    '400': {
-      description: 'Erro de validação',
-      content: {
-        'application/json': {
-          schema: { $ref: '#/components/schemas/ErrorsResponse' },
-        },
-      },
-    },
     '403': {
       description: 'Acesso negado',
       content: {
@@ -69,11 +60,7 @@ export const updateAccountSwagger: Operation = {
       content: {
         'application/json': {
           schema: { $ref: '#/components/schemas/ErrorsResponse' },
-          examples: {
-            'Usuário não encontrado': {
-              value: { messages: [ACCOUNT_NOT_FOUND_ERROR] }
-            }
-          }
+          example: { messages: [ACCOUNT_NOT_FOUND_ERROR] }
         },
       },
     },
@@ -82,26 +69,9 @@ export const updateAccountSwagger: Operation = {
       content: {
         'application/json': {
           schema: { $ref: '#/components/schemas/ErrorsResponse' },
-          examples: {
-            'E-mail em uso': {
-              value: { messages: [UPDATE_ACCOUNT_CONFLICT_ERROR] }
-            }
-          }
+          example: { messages: [UPDATE_ACCOUNT_CONFLICT_ERROR] }
         },
       },
     },
-    '500': {
-      description: 'Erro interno do servidor',
-      content: {
-        'application/json': {
-          schema: { $ref: '#/components/schemas/ErrorsResponse' },
-          examples: {
-            'Erro ao atualizar': {
-              value: { messages: [UPDATE_ACCOUNT_ERROR] }
-            }
-          }
-        },
-      },
-    }
   },
 }

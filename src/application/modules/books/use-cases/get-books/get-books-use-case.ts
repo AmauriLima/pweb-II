@@ -1,5 +1,3 @@
-import { InternalServerHTTPError } from "@/application/shared/http/errors/internal-server-http-error";
-import { GET_BOOKS_ERROR } from "../../docs/get-books-swagger";
 import { Book } from "../../entities/book";
 import { BookRepository } from "../../repositories/book-repository";
 
@@ -15,14 +13,10 @@ export class GetBooksUseCase {
   ) {}
 
   async execute(_input: Input): Promise<Output> {
-    try {
-      const books = await this.bookRepo.getBooks();
+    const books = await this.bookRepo.getBooks();
 
-      return {
-        books
-      }
-    } catch {
-      throw new InternalServerHTTPError(GET_BOOKS_ERROR);
+    return {
+      books
     }
   }
 }

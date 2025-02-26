@@ -1,8 +1,8 @@
 import { Tags } from "@/@types/tags";
 import { Operation } from "swagger-jsdoc";
 import { ACCOUNT_NOT_FOUND_ERROR } from "../../accounts/docs/update-account-swagger";
+import { BOOK_NOT_FOUND_ERROR } from "../../books/docs/delete-book-swagger";
 
-export const CREATE_LOAN_ERROR = 'Erro ao criar empréstimo';
 export const BOOK_OUT_ERROR = 'Livro sem estoque!';
 export const LOAN_IN_PROGRESS_ERROR = 'Você já tem um empréstimo desse livro em andamento, devolva primeiro para poder fazer outro';
 
@@ -27,14 +27,6 @@ export const createLoanSwagger: Operation = {
         },
       },
     },
-    '400': {
-      description: 'Erro de validação',
-      content: {
-        'application/json': {
-          schema: { $ref: '#/components/schemas/ErrorsResponse' },
-        },
-      },
-    },
     '404': {
       description: 'Livro não encontrado ou Usuário não encontrado',
       content: {
@@ -42,7 +34,7 @@ export const createLoanSwagger: Operation = {
           schema: { $ref: '#/components/schemas/MultipleErrorsResponse' },
           examples: {
             'Livro não encontrado': {
-              value: { messages: [BOOK_OUT_ERROR] }
+              value: { messages: [BOOK_NOT_FOUND_ERROR] }
             },
             'Usuário não encontrado': {
               value: { messages: [ACCOUNT_NOT_FOUND_ERROR] }
@@ -67,18 +59,5 @@ export const createLoanSwagger: Operation = {
         }
       }
     },
-    '500': {
-      description: 'Erro interno do servidor',
-      content: {
-        'application/json': {
-          schema: { $ref: '#/components/schemas/ErrorsResponse' },
-          examples: {
-            'Erro ao criar': {
-              value: { messages: [CREATE_LOAN_ERROR] }
-            }
-          }
-        },
-      },
-    }
   },
 }

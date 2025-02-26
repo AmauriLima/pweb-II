@@ -1,8 +1,7 @@
 import { ConflictHTTPError } from "@/application/shared/http/errors/conflict-http-error";
-import { InternalServerHTTPError } from "@/application/shared/http/errors/internal-server-http-error";
 import { NotFoundHTTPError } from "@/application/shared/http/errors/not-found-http-error";
 import { IUseCase } from "@/application/shared/http/interfaces/use-case";
-import { ACCOUNT_NOT_FOUND_ERROR, UPDATE_ACCOUNT_CONFLICT_ERROR, UPDATE_ACCOUNT_ERROR } from "../../docs/update-account-swagger";
+import { ACCOUNT_NOT_FOUND_ERROR, UPDATE_ACCOUNT_CONFLICT_ERROR } from "../../docs/update-account-swagger";
 import { Account, Roles } from "../../entities/account";
 import { AccountRepository } from "../../repositories/account-repository";
 import { makeValidateRoleHierarchyUseCase } from "../validate-role-hierarchy/factories/make-validate-role-hierarchy";
@@ -52,12 +51,8 @@ export class UpdateAccountUseCase implements IUseCase<IInput, IOutput> {
       createdAt: account.createdAt,
     });
 
-    try {
-      await this.accountRepo.updateAccount(updatedAccount);
+    await this.accountRepo.updateAccount(updatedAccount);
 
-      return { updatedAccount };
-    } catch {
-      throw new InternalServerHTTPError(UPDATE_ACCOUNT_ERROR);
-    }
+    return { updatedAccount };
   }
 }

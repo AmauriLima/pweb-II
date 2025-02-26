@@ -6,7 +6,7 @@ import { getLoansSwagger } from "./get-loans-swagger";
 
 export const loansPath: PathItem = {
   post: addDefaultResponsesSwagger(createLoanSwagger),
-  get: addDefaultResponsesSwagger(getLoansSwagger),
+  get: addDefaultResponsesSwagger(getLoansSwagger, { omitResponses: ["400"] }),
 }
 
 export const loansPathWithId: PathItem = {

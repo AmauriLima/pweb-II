@@ -4,7 +4,6 @@ import { Operation } from "swagger-jsdoc";
 import { VALIDATE_ROLE_HIERARCHY_ERROR } from "../use-cases/validate-role-hierarchy/validate-role-hierarchy-use-case";
 
 export const CREATE_ACCOUNT_CONFLICT_ERROR = 'Já existe uma conta com esse e-mail!';
-export const CREATE_ACCOUNT_ERROR = 'Erro ao criar conta!';
 
 export const createAccountSwagger: Operation = {
   tags: [Tags.ACCOUNTS],
@@ -24,14 +23,6 @@ export const createAccountSwagger: Operation = {
       content: {
         'application/json': {
           schema: { $ref: '#/components/schemas/AccountResponse' },
-        },
-      },
-    },
-    '400': {
-      description: 'Erro de validação',
-      content: {
-        'application/json': {
-          schema: { $ref: '#/components/schemas/ErrorsResponse' },
         },
       },
     },
@@ -56,26 +47,11 @@ export const createAccountSwagger: Operation = {
       content: {
         'application/json': {
           schema: { $ref: '#/components/schemas/ErrorsResponse' },
-          examples: {
-            'E-mail em uso': {
-              value: { messages: [CREATE_ACCOUNT_CONFLICT_ERROR] }
-            }
+          example: {
+            messages: [CREATE_ACCOUNT_CONFLICT_ERROR]
           }
         },
       },
     },
-    '500': {
-      description: 'Erro interno do servidor',
-      content: {
-        'application/json': {
-          schema: { $ref: '#/components/schemas/ErrorsResponse' },
-          examples: {
-            'Erro ao criar': {
-              value: { messages: [CREATE_ACCOUNT_ERROR] }
-            }
-          }
-        },
-      },
-    }
   },
 }

@@ -7,7 +7,7 @@ import { updateAccountSwagger } from "./update-account-swagger";
 
 export const accountsPath: PathItem = {
   post: addDefaultResponsesSwagger(createAccountSwagger),
-  get: addDefaultResponsesSwagger(getAccountsSwagger),
+  get: addDefaultResponsesSwagger(getAccountsSwagger, { omitResponses: ["400"] }),
 }
 
 export const accountPathWithId: PathItem = {

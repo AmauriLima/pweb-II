@@ -1,6 +1,4 @@
-import { InternalServerHTTPError } from "@/application/shared/http/errors/internal-server-http-error";
 import { IUseCase } from "@/application/shared/http/interfaces/use-case";
-import { CREATE_BOOK_ERROR } from "../../docs/create-book-swagger";
 import { Book } from "../../entities/book";
 import { BookRepository } from "../../repositories/book-repository";
 import { CreateBookSchema } from "./create-book-dto";
@@ -24,14 +22,10 @@ export class CreateBookUseCase implements IUseCase<IInput, IOutput> {
       loanAmount: 0,
     });
 
-    try {
-      await this.bookRepo.createBook(book);
+    await this.bookRepo.createBook(book);
 
-      return {
-        book,
-      }
-    } catch {
-      throw new InternalServerHTTPError(CREATE_BOOK_ERROR);
+    return {
+      book,
     }
   }
 }

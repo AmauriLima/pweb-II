@@ -16,6 +16,7 @@ import { loansPath, loansPathWithId } from '@/application/modules/loans/docs/loa
 
 import { loanHttpSchema } from '@/application/modules/loans/mappers/loan-mapper';
 import { createLoanOpenAPISchema } from '@/application/modules/loans/use-cases/create-loan/create-loan-dto';
+import { INTERNAL_SERVER_HTTP_ERROR_DEFAULT_MESSAGE } from '@/application/shared/http/errors/internal-server-http-error';
 import { INVALID_TOKEN_ERROR } from '@/application/shared/http/middlewares/authentication-middleware';
 import { ACCESS_FORBIDDEN_ERROR } from '@/application/shared/http/middlewares/authorization-middleware';
 import { Express } from 'express';
@@ -53,6 +54,14 @@ const options: swaggerJsdoc.Options = {
         },
       },
       responses: {
+        ValidationError: {
+          description: 'Erro de validação',
+          content: {
+            'application/json': {
+              schema: { $ref: '#/components/schemas/ErrorsResponse' },
+            },
+          },
+        },
         UnauthorizedError: {
           description: "Token inválido ou não fornecido",
           content: {
@@ -79,6 +88,16 @@ const options: swaggerJsdoc.Options = {
             "application/json": {
               example: {
                 messages: [VALIDATE_ROLE_HIERARCHY_ERROR],
+              },
+            },
+          },
+        },
+        InternalServerError: {
+          description: "Erro interno do servidor.",
+          content: {
+            "application/json": {
+              example: {
+                messages: [INTERNAL_SERVER_HTTP_ERROR_DEFAULT_MESSAGE],
               },
             },
           },

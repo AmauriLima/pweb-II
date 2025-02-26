@@ -7,7 +7,7 @@ import { updateBookSwagger } from "./update-book-swagger";
 
 export const booksPath: PathItem = {
   post: addDefaultResponsesSwagger(createBookSwagger),
-  get: addDefaultResponsesSwagger(getBooksSwagger),
+  get: addDefaultResponsesSwagger(getBooksSwagger, { omitResponses: ["400", "403"] }),
 }
 
 export const booksPathWithId: PathItem = {

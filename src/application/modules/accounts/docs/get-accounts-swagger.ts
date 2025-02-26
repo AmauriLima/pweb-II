@@ -1,7 +1,6 @@
 import { Tags } from "@/@types/tags";
 import { Operation } from "swagger-jsdoc";
 
-export const GET_ACCOUNTS_ERROR = 'Erro ao listar usuários';
 
 export const getAccountsSwagger: Operation = {
   tags: [Tags.ACCOUNTS],
@@ -19,18 +18,5 @@ export const getAccountsSwagger: Operation = {
         },
       },
     },
-    '500': {
-      description: 'Erro interno do servidor',
-      content: {
-        'application/json': {
-          schema: { $ref: '#/components/schemas/ErrorsResponse' },
-          examples: {
-            'Erro ao listar': {
-              value: { messages: [GET_ACCOUNTS_ERROR] }
-            }
-          }
-        },
-      },
-    }
   },
 }
