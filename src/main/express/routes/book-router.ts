@@ -1,4 +1,4 @@
-import { Roles } from "@/application/modules/accounts/entities/account";
+import { Roles } from "@/application/modules/accounts/entities/role";
 import { makeCreateBookController } from "@/application/modules/books/use-cases/create-book/factories/make-create-book-controller";
 import { makeGetBooksController } from "@/application/modules/books/use-cases/get-books/factories/make-get-books-controller";
 import { makeRemoveBookController } from "@/application/modules/books/use-cases/remove-book/factories/make-remove-book-controller";

@@ -1,7 +1,7 @@
 import { IUseCase } from "@/application/shared/http/interfaces/use-case";
 
 import { ForbiddenHTTPError } from "@/application/shared/http/errors/forbidden-http-error";
-import { roleHierarchy, Roles } from "../../entities/account";
+import { roleHierarchy, Roles } from "../../entities/role";
 
 interface IInput {
   accountRole: Roles;

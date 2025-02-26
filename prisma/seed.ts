@@ -1,6 +1,5 @@
 import { env } from "@/application/config/env";
-import { Roles } from "@/application/modules/accounts/entities/account";
-import { Role } from "@/application/modules/accounts/entities/role";
+import { Role, Roles } from "@/application/modules/accounts/entities/role";
 import { makeCreateAccountUseCase } from "@/application/modules/accounts/use-cases/create-account/factories/make-create-account-use-case";
 import { prismaClient } from "@/application/shared/clients/prisma-client";
 import { Roles as RawRoles } from "@prisma/client";

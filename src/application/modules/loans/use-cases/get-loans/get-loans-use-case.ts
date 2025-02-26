@@ -1,7 +1,9 @@
 import { Loan } from "../../entities/loan";
 import { LoanRepository } from "../../repositories/loan-repository";
 
-type Input = void;
+interface Input {
+  accountId?: string;
+};
 interface Output {
   loans: Loan[]
 };
@@ -11,8 +13,10 @@ export class GetLoansUseCase {
     private readonly loanRepo: LoanRepository,
   ) {}
 
-  async execute(_input: Input): Promise<Output> {
-    const loans = await this.loanRepo.getLoans();
+  async execute({ accountId }: Input): Promise<Output> {
+    const loans = accountId
+      ? await this.loanRepo.getLoansByAccountId(accountId)
+      : await this.loanRepo.getLoans();
 
     return {
       loans

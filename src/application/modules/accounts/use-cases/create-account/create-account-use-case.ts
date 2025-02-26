@@ -2,7 +2,8 @@ import { ConflictHTTPError } from "@/application/shared/http/errors/conflict-htt
 import { IUseCase } from "@/application/shared/http/interfaces/use-case";
 import { HashProvider } from "@/application/shared/providers/hash-provider/hash-provider";
 import { CREATE_ACCOUNT_CONFLICT_ERROR } from "../../docs/create-account-swagger";
-import { Account, Roles } from "../../entities/account";
+import { Account } from "../../entities/account";
+import { Roles } from "../../entities/role";
 import { AccountRepository } from "../../repositories/account-repository";
 import { makeValidateRoleHierarchyUseCase } from "../validate-role-hierarchy/factories/make-validate-role-hierarchy";
 import { CreateAccountSchema } from "./create-account-dto";

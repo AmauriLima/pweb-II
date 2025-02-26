@@ -1,4 +1,4 @@
-import { Roles } from "@/application/modules/accounts/entities/account";
+import { Roles } from "@/application/modules/accounts/entities/role";
 
 export interface IHttpRequest {
   body: Record<string, any>;

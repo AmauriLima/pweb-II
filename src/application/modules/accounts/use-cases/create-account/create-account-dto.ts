@@ -1,6 +1,6 @@
 import { generateSchema } from "@anatine/zod-openapi";
 import { z } from "zod";
-import { Roles } from "../../entities/account";
+import { Roles } from "../../entities/role";
 
 
 export const createAccountSchema = z.object({

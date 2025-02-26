@@ -2,7 +2,8 @@ import { ConflictHTTPError } from "@/application/shared/http/errors/conflict-htt
 import { NotFoundHTTPError } from "@/application/shared/http/errors/not-found-http-error";
 import { IUseCase } from "@/application/shared/http/interfaces/use-case";
 import { ACCOUNT_NOT_FOUND_ERROR, UPDATE_ACCOUNT_CONFLICT_ERROR } from "../../docs/update-account-swagger";
-import { Account, Roles } from "../../entities/account";
+import { Account } from "../../entities/account";
+import { Roles } from "../../entities/role";
 import { AccountRepository } from "../../repositories/account-repository";
 import { makeValidateRoleHierarchyUseCase } from "../validate-role-hierarchy/factories/make-validate-role-hierarchy";
 import { UpdateAccountSchema } from "./update-account-dto";

@@ -12,7 +12,7 @@ import { booksPath, booksPathWithId } from '@/application/modules/books/docs/boo
 import { bookHttpSchema } from '@/application/modules/books/mappers/book-mapper';
 import { createBookOpenAPISchema } from '@/application/modules/books/use-cases/create-book/create-book-dto';
 import { updateBookOpenAPISchema } from '@/application/modules/books/use-cases/update-book/update-book-dto';
-import { loansPath, loansPathWithId } from '@/application/modules/loans/docs/loans-path';
+import { loansPath, loansPathWithId, myLoansPath } from '@/application/modules/loans/docs/loans-path';
 
 import { loanHttpSchema } from '@/application/modules/loans/mappers/loan-mapper';
 import { createLoanOpenAPISchema } from '@/application/modules/loans/use-cases/create-loan/create-loan-dto';
@@ -157,6 +157,7 @@ const options: swaggerJsdoc.Options = {
       '/books': booksPath,
       '/books/{bookId}': booksPathWithId,
       '/loans': loansPath,
+      '/loans/me': myLoansPath,
       '/loans/{loanId}': loansPathWithId,
     }
   },

@@ -1,6 +1,6 @@
 
 
-import { Roles } from '@/application/modules/accounts/entities/account';
+import { Roles } from '@/application/modules/accounts/entities/role';
 import { ForbiddenHTTPError } from '../errors/forbidden-http-error';
 import { IHttpRequest, IHttpResponse } from '../interfaces/http';
 import { IData, IMiddleware } from '../interfaces/middleware';

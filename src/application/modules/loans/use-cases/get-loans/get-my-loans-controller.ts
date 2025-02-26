@@ -4,13 +4,13 @@ import { HttpResponse } from "@/application/shared/http/response/http-response";
 import { LoanMapper } from "../../mappers/loan-mapper";
 import { GetLoansUseCase } from "./get-loans-use-case";
 
-export class GetLoansController implements IController {
+export class GetMyLoansController implements IController {
   constructor(
     private readonly useCase: GetLoansUseCase,
   ) {}
 
-  async handle(_request: IHttpRequest): Promise<IHttpResponse> {
-    const { loans } = await this.useCase.execute({});
+  async handle(request: IHttpRequest): Promise<IHttpResponse> {
+    const { loans } = await this.useCase.execute({ accountId: request.account?.id });
 
     return HttpResponse.ok({
       body: loans.map(LoanMapper.toHttp)

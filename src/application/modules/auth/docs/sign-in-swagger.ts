@@ -2,7 +2,7 @@ import { Tags } from "@/@types/tags";
 import { generateSchema } from "@anatine/zod-openapi";
 import { Operation } from "swagger-jsdoc";
 import { z } from "zod";
-import { Roles } from "../../accounts/entities/account";
+import { Roles } from "../../accounts/entities/role";
 
 export const INVALID_CREDENTIALS_ERROR = 'Credenciais inválidas';
 

@@ -4,7 +4,7 @@ import { makeRemoveAccountController } from "@/application/modules/accounts/use-
 import { makeUpdateAccountController } from "@/application/modules/accounts/use-cases/update-account/factories/make-update-account-controller";
 import { makeAuthorizationMiddleware } from "@/application/shared/http/middlewares/factories/make-authorization-middleware";
 
-import { Roles } from "@/application/modules/accounts/entities/account";
+import { Roles } from "@/application/modules/accounts/entities/role";
 import { Router } from "express";
 import { middlewareAdapter } from "../adapters/middleware-adapter";
 import { routeAdapter } from "../adapters/route-adapter";

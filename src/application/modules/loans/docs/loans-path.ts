@@ -9,6 +9,10 @@ export const loansPath: PathItem = {
   get: addDefaultResponsesSwagger(getLoansSwagger, { omitResponses: ["400"] }),
 }
 
+export const myLoansPath: PathItem = {
+  get: addDefaultResponsesSwagger(getLoansSwagger, { omitResponses: ["400"] }),
+}
+
 export const loansPathWithId: PathItem = {
   patch: addDefaultResponsesSwagger(closeLoanSwagger),
 }
