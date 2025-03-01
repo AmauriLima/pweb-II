@@ -1,5 +1,5 @@
 model Book {
-  id          String @id @default(uuid()) @db.Uuid
+  id          String @id @default(uuid(7)) @db.Uuid
   name        String
   description String
   coverUrl    String @map("cover_url")

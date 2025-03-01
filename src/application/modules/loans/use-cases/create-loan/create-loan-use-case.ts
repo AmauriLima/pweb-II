@@ -3,10 +3,9 @@ import { AccountRepository } from "@/application/modules/accounts/repositories/a
 import { BOOK_NOT_FOUND_ERROR } from "@/application/modules/books/docs/delete-book-swagger";
 import { BookOperation, BookRepository } from "@/application/modules/books/repositories/book-repository";
 import { ConflictHTTPError } from "@/application/shared/http/errors/conflict-http-error";
-import { InternalServerHTTPError } from "@/application/shared/http/errors/internal-server-http-error";
 import { NotFoundHTTPError } from "@/application/shared/http/errors/not-found-http-error";
 import { IUseCase } from "@/application/shared/http/interfaces/use-case";
-import { BOOK_OUT_ERROR, CREATE_LOAN_ERROR, LOAN_IN_PROGRESS_ERROR } from "../../docs/create-loan-swagger";
+import { BOOK_OUT_ERROR, LOAN_IN_PROGRESS_ERROR } from "../../docs/create-loan-swagger";
 import { Loan } from "../../entities/loan";
 import { LoanRepository } from "../../repositories/loan-repository";
 import { CreateLoanSchema } from "./create-loan-dto";
@@ -53,17 +52,12 @@ export class CreateLoanUseCase implements IUseCase<IInput, IOutput> {
       dueDate: new Date(input.dueDate),
     });
 
-    try {
-      await this.bookRepo.changeBookLoanAmount(book, BookOperation.LOAN);
+    await this.bookRepo.changeBookLoanAmount(book, BookOperation.LOAN);
 
-      await this.loanRepo.createLoan(loan);
+    await this.loanRepo.createLoan(loan);
 
-      return {
-        loan,
-      };
-    } catch {
-      throw new InternalServerHTTPError(CREATE_LOAN_ERROR);
-    }
+    return {
+      loan,
+    };
   }
-
 }

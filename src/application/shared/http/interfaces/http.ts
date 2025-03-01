@@ -1,3 +1,4 @@
+import { Roles } from "@/application/modules/accounts/entities/role";
 
 export interface IHttpRequest {
   body: Record<string, any>;
@@ -6,7 +7,7 @@ export interface IHttpRequest {
   headers: Record<string, string>;
   account?: {
     id: string;
-    role: string;
+    role: Roles;
   };
 }
 

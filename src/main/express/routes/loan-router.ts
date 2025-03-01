@@ -4,11 +4,18 @@ import { makeGetLoansController } from "@/application/modules/loans/use-cases/ge
 import { Router } from "express";
 import { routeAdapter } from "../adapters/route-adapter";
 
+import { Roles } from "@/application/modules/accounts/entities/role";
+import { makeGetMyLoansController } from "@/application/modules/loans/use-cases/get-loans/factories/make-get-MY-loans-controller";
+import { makeAuthorizationMiddleware } from "@/application/shared/http/middlewares/factories/make-authorization-middleware";
+import { middlewareAdapter } from "../adapters/middleware-adapter";
+
 export const loanRouter = Router();
 
-loanRouter.get('/', routeAdapter(makeGetLoansController()));
+const authorizationMiddleware =
+  middlewareAdapter(makeAuthorizationMiddleware([Roles.MANAGER, Roles.USER_MANAGER]));
 
-loanRouter.post('/', routeAdapter(makeCreateLoanController()));
-
-loanRouter.patch('/:loanId', routeAdapter(makeCloseLoanController()));
+loanRouter.get('/', authorizationMiddleware, routeAdapter(makeGetLoansController()));
+loanRouter.get('/me', routeAdapter(makeGetMyLoansController()));
+loanRouter.post('/', authorizationMiddleware, routeAdapter(makeCreateLoanController()));
+loanRouter.patch('/:loanId', authorizationMiddleware, routeAdapter(makeCloseLoanController()));
 

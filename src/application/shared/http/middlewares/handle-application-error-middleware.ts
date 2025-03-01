@@ -1,6 +1,7 @@
 import { ZodError } from 'zod';
 
 import { HttpError } from '../errors/http-error';
+import { INTERNAL_SERVER_HTTP_ERROR_DEFAULT_MESSAGE } from '../errors/internal-server-http-error';
 import { IErrorMiddleware } from '../interfaces/error-middleware';
 import { IHttpResponse, IHttpStatusCode } from '../interfaces/http';
 
@@ -39,7 +40,7 @@ export class HandleApplicationErrorMiddleware implements IErrorMiddleware {
       return {
         statusCode: IHttpStatusCode.INTERNAL_SERVER_ERROR,
         body: {
-          messages: [error.message],
+          messages: [INTERNAL_SERVER_HTTP_ERROR_DEFAULT_MESSAGE],
         }
       };
     }
@@ -47,7 +48,7 @@ export class HandleApplicationErrorMiddleware implements IErrorMiddleware {
     return {
       statusCode: IHttpStatusCode.INTERNAL_SERVER_ERROR,
       body: {
-        messages: ['Erro desconhecido']
+        messages: [INTERNAL_SERVER_HTTP_ERROR_DEFAULT_MESSAGE]
       }
     };
   }

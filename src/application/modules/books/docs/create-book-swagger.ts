@@ -1,7 +1,6 @@
 import { Tags } from "@/@types/tags";
 import { Operation } from "swagger-jsdoc";
 
-export const CREATE_BOOK_ERROR = 'Erro ao criar livro';
 
 export const createBookSwagger: Operation = {
   tags: [Tags.BOOKS],
@@ -24,26 +23,5 @@ export const createBookSwagger: Operation = {
         },
       },
     },
-    '400': {
-      description: 'Erro de validação',
-      content: {
-        'application/json': {
-          schema: { $ref: '#/components/schemas/ErrorsResponse' },
-        },
-      },
-    },
-    '500': {
-      description: 'Erro interno do servidor',
-      content: {
-        'application/json': {
-          schema: { $ref: '#/components/schemas/ErrorsResponse' },
-          examples: {
-            'Erro ao criar': {
-              value: { messages: [CREATE_BOOK_ERROR] }
-            }
-          }
-        },
-      },
-    }
   },
 }

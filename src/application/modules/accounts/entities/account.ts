@@ -1,9 +1,11 @@
 import { Entity, IEntityProps } from "@/application/shared/entities/entity";
+import { Roles } from "./role";
 
 interface IAccountProps extends IEntityProps {
   name: string;
   email: string;
   password: string;
+  roleCode: Roles;
 }
 
 export class Account extends Entity {
@@ -24,5 +26,9 @@ export class Account extends Entity {
 
   public get password(): string {
     return this.props.password;
+  }
+
+  public get roleCode(): Roles {
+    return this.props.roleCode;
   }
 }

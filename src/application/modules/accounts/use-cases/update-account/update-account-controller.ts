@@ -21,6 +21,7 @@ export class UpdateAccountController implements IController {
 
     const { updatedAccount } = await this.useCase.execute({
       accountId,
+      accountRole: request.account!.role,
       ...parsedBody
     });
 

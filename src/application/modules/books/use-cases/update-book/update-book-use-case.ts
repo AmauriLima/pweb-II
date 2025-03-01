@@ -1,8 +1,6 @@
-import { InternalServerHTTPError } from "@/application/shared/http/errors/internal-server-http-error";
 import { NotFoundHTTPError } from "@/application/shared/http/errors/not-found-http-error";
 import { IUseCase } from "@/application/shared/http/interfaces/use-case";
 import { BOOK_NOT_FOUND_ERROR } from "../../docs/delete-book-swagger";
-import { UPDATE_BOOK_ERROR } from "../../docs/update-book-swagger";
 import { Book } from "../../entities/book";
 import { BookRepository } from "../../repositories/book-repository";
 import { UpdateBookSchema } from "./update-book-dto";
@@ -36,12 +34,8 @@ export class UpdateBookUseCase implements IUseCase<IInput, IOutput> {
       loanAmount: book.loanAmount,
     });
 
-    try {
-      await this.bookRepo.updateBook(updatedBook);
+    await this.bookRepo.updateBook(updatedBook);
 
-      return { updatedBook };
-    } catch {
-      throw new InternalServerHTTPError(UPDATE_BOOK_ERROR);
-    }
+    return { updatedBook };
   }
 }

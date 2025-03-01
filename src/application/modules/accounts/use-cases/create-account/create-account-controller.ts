@@ -13,7 +13,10 @@ export class CreateAccountController implements IController {
   async handle(request: IHttpRequest): Promise<IHttpResponse> {
     const parsedBody = createAccountSchema.parse(request.body);
 
-    const { account } = await this.useCase.execute(parsedBody);
+    const { account } = await this.useCase.execute({
+      ...parsedBody,
+      accountRole: request.account!.role,
+    });
 
     return HttpResponse.created({
       body: AccountMapper.toHttp(account)

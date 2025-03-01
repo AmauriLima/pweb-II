@@ -1,7 +1,6 @@
-import { InternalServerHTTPError } from "@/application/shared/http/errors/internal-server-http-error";
 import { NotFoundHTTPError } from "@/application/shared/http/errors/not-found-http-error";
 import { IUseCase } from "@/application/shared/http/interfaces/use-case";
-import { BOOK_NOT_FOUND_ERROR, REMOVE_BOOK_ERROR } from "../../docs/delete-book-swagger";
+import { BOOK_NOT_FOUND_ERROR } from "../../docs/delete-book-swagger";
 import { BookRepository } from "../../repositories/book-repository";
 
 interface IInput {
@@ -22,11 +21,6 @@ export class RemoveBookUsecase implements IUseCase<IInput, IOutput> {
       throw new NotFoundHTTPError(BOOK_NOT_FOUND_ERROR);
     }
 
-    try {
-      await this.bookRepo.removeBook(bookId);
-    } catch {
-      throw new InternalServerHTTPError(REMOVE_BOOK_ERROR);
-    }
-
+    await this.bookRepo.removeBook(bookId);
   }
 }
