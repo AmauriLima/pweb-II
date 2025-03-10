@@ -29,7 +29,7 @@ export class PrismaBookRepository implements BookRepository {
     const books = await this.prisma.book.findMany({
       take: take,
       skip: cursor ? 1 : 0,
-      cursor: cursor ? {id: cursor } : undefined,
+      cursor: cursor ? { id: cursor } : undefined,
     });
 
     return {
