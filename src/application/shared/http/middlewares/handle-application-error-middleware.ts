@@ -40,7 +40,7 @@ export class HandleApplicationErrorMiddleware implements IErrorMiddleware {
       return {
         statusCode: IHttpStatusCode.INTERNAL_SERVER_ERROR,
         body: {
-          messages: [INTERNAL_SERVER_HTTP_ERROR_DEFAULT_MESSAGE],
+          messages: [INTERNAL_SERVER_HTTP_ERROR_DEFAULT_MESSAGE, error.message],
         }
       };
     }
