@@ -15,12 +15,16 @@ export class GetLoansController implements IController {
   ) {}
 
   async handle(request: IHttpRequest): Promise<IHttpResponse> {
-    const { accountId } = schema.parse(request.query);
+    const { 
+      accountId } = schema.parse(request.query);
 
     const { loans } = await this.useCase.execute({ accountId });
-
+ 
     return HttpResponse.ok({
       body: loans.map(LoanMapper.toHttp)
     });
   }
+
+
+  
 }

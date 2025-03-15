@@ -16,4 +16,5 @@ export class GetMyLoansController implements IController {
       body: loans.map(LoanMapper.toHttp)
     });
   }
+  
 }
