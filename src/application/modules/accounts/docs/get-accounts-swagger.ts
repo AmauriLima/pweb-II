@@ -1,7 +1,6 @@
 import { Tags } from "@/@types/tags";
 import { Operation } from "swagger-jsdoc";
 
-
 export const getAccountsSwagger: Operation = {
   tags: [Tags.ACCOUNTS],
   summary: 'Lista todas as contas',

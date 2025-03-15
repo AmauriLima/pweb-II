@@ -2,10 +2,9 @@
 export default {
   preset: "ts-jest",
   testEnvironment: "node",
-  setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   clearMocks: true,
   testMatch: ["**/__tests__/**/*.test.ts"],
-  collectCoverage: true,
+  collectCoverage: false,
   coverageDirectory: "coverage",
   coverageProvider: "v8",
   moduleFileExtensions: ["ts", "js", "json"],

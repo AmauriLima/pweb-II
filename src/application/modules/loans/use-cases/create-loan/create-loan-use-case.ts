@@ -50,6 +50,8 @@ export class CreateLoanUseCase implements IUseCase<IInput, IOutput> {
       accountId: input.accountId,
       bookId: input.bookId,
       dueDate: new Date(input.dueDate),
+      accountName: account.name,
+      bookName: book.name,
     });
 
     await this.bookRepo.changeBookLoanAmount(book, BookOperation.LOAN);
