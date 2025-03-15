@@ -4,6 +4,7 @@ import { HttpResponse } from "@/application/shared/http/response/http-response";
 import { z } from "zod";
 import { LoanMapper } from "../../mappers/loan-mapper";
 import { GetLoansUseCase } from "./get-loans-use-case";
+import { getLoansSchema } from "./get-loans-dto";
 
 const schema = z.object({
   accountId: z.string().uuid().optional(),
@@ -16,14 +17,28 @@ export class GetLoansController implements IController {
 
   async handle(request: IHttpRequest): Promise<IHttpResponse> {
     const { 
-      accountId } = schema.parse(request.query);
+      accountId,
+      cursor,
+      limit
+    } = getLoansSchema.parse(request.query);
 
-    const { loans } = await this.useCase.execute({ accountId });
- 
-    return HttpResponse.ok({
-      body: loans.map(LoanMapper.toHttp)
+    const { loans, nextCursor } = await this.useCase.execute({
+      accountId,
+      cursor,
+      take: limit
     });
+
+    return HttpResponse.ok({
+      body: {
+        data: loans.map(LoanMapper.toHttp),
+        nextCursor,
+      }
+    });
+
+    
   }
+
+
 
 
   

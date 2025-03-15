@@ -1,7 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import { Loan } from "../entities/loan";
 import { LoanMapper } from "../mappers/loan-mapper";
-import { LoanRepository } from "./loan-repository";
+import { LoanRepository, LoansParams } from "./loan-repository";
+import { GetLoansResponse } from "./loan-repository";
 
 export class PrismaLoanRepository implements LoanRepository {
   private readonly include = {
@@ -45,12 +46,21 @@ export class PrismaLoanRepository implements LoanRepository {
     });
   }
 
-  async getLoans(): Promise<Loan[]> {
+  async getLoans({accountId, cursor, take = 10 }: LoansParams): Promise<GetLoansResponse> {
     const loans = await this.prisma.loan.findMany({
+      take: take,
+      skip: cursor ? 1 : 0,
+      cursor: cursor ? { id: cursor } : undefined,
+      where: accountId ? { accountId } : undefined,
       include: this.include,
     });
-    return loans.map(LoanMapper.toDomain);
+    return {
+      loans: loans.map(LoanMapper.toDomain),
+      nextCursor: loans.length === take ? loans[loans.length - 1].id : null,
+    }
   }
+
+
 
   async getLoansByAccountAndBook(accountId: string, bookId: string): Promise<Loan[]> {
     const loans = await this.prisma.loan.findMany({
