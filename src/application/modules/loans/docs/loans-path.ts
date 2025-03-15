@@ -11,7 +11,7 @@ export const loansPath: PathItem = {
 }
 
 export const myLoansPath: PathItem = {
-  get: addDefaultResponsesSwagger(getMyLoansSwagger, { omitResponses: ["400", "403"] }),
+  get: addDefaultResponsesSwagger(getMyLoansSwagger),
 }
 
 export const loansPathWithId: PathItem = {

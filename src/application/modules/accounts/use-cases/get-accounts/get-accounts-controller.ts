@@ -2,18 +2,27 @@ import { IController } from "@/application/shared/http/interfaces/controller";
 import { IHttpRequest, IHttpResponse } from "@/application/shared/http/interfaces/http";
 import { HttpResponse } from "@/application/shared/http/response/http-response";
 import { AccountMapper } from "../../mappers/account-mapper";
-import { GetAccountUsecase } from "./get-accounts-use-case";
+import { getAccountsSchema } from "./get-accounts-dto";
+import { GetAccountsUseCase } from "./get-accounts-use-case";
 
 export class GetAccountsController implements IController {
   constructor(
-    private readonly useCase: GetAccountUsecase,
+    private readonly useCase: GetAccountsUseCase,
   ) {}
 
-  async handle(_request: IHttpRequest): Promise<IHttpResponse> {
-    const { accounts } = await this.useCase.execute();
+  async handle(request: IHttpRequest): Promise<IHttpResponse> {
+    const { cursor, limit } = getAccountsSchema.parse(request.query);
+
+    const { accounts, nextCursor } = await this.useCase.execute({
+      cursor,
+      take: limit
+    });
 
     return HttpResponse.ok({
-      body: accounts.map(AccountMapper.toHttp)
+      body: {
+        data: accounts.map(AccountMapper.toHttp),
+        nextCursor,
+      }
     });
   }
 }

@@ -9,7 +9,26 @@ export const getLoansSwagger: Operation = {
     {
       name: "accountId",
       in: "query",
-      description: "Uuid da conta que os expréstimos estão vinculados ",
+      description: "UUID da conta que os empréstimos estão vinculados",
+      required: false,
+      schema: {
+        type: "string",
+      },
+    },
+    {
+      name: "limit",
+      in: "query",
+      description: "Número de empréstimos por página",
+      required: false,
+      schema: {
+        type: "integer",
+        default: 10,
+      },
+    },
+    {
+      name: "cursor",
+      in: "query",
+      description: "Cursor para paginação baseada em cursor, UUID",
       required: false,
       schema: {
         type: "string",
@@ -22,8 +41,18 @@ export const getLoansSwagger: Operation = {
       content: {
         'application/json': {
           schema: {
-            type: 'array',
-            items: { $ref: '#/components/schemas/LoanResponse' },
+            type: 'object',
+            properties: {
+              data: {
+                type: 'array',
+                items: { $ref: '#/components/schemas/LoanResponse' },
+              },
+              nextCursor: {
+                type: 'string',
+                nullable: true,
+                description: "Cursor para a próxima página. Null indica que não há mais resultados.",
+              },
+            },
           },
         },
       },

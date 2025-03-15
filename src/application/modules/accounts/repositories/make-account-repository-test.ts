@@ -1,5 +1,5 @@
 import { Account } from "../entities/account";
-import { AccountRepository } from "./account-repository";
+import { AccountRepository, AccountsParams, GetAccountsResponse } from "./account-repository";
 
 export function makeAccountRepositoryTest(accountsParam: Account[] = []): AccountRepository {
   return new class TestAccountRepository implements AccountRepository {
@@ -11,8 +11,17 @@ export function makeAccountRepositoryTest(accountsParam: Account[] = []): Accoun
       this.accounts.push(account);
     }
 
-    async getAccounts(): Promise<Account[]> {
-      return this.accounts;
+    async getAccounts({ cursor, take = 10 }: AccountsParams): Promise<GetAccountsResponse> {
+      const accountCursor = cursor ? this.accounts.filter((account) => account.id >= cursor) : this.accounts;
+      const accounts = accountCursor.slice(0, take + 1);
+
+      const nextCursor = accounts[take]?.id ?? null;
+      nextCursor && accounts.pop();
+
+      return {
+        accounts,
+        nextCursor,
+      };
     }
 
     async getAccountById(accountId: string): Promise<Account | null> {
