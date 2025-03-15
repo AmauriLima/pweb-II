@@ -2,9 +2,14 @@ import { Book } from "../../entities/book";
 import { BookRepository } from "../../repositories/book-repository";
 
 
-type Input = void;
+interface Input {
+  cursor?: string | null;
+  take?: number;
+};
+
 interface Output {
-  books: Book[]
+  books: Book[];
+  nextCursor: string | null;
 };
 
 export class GetBooksUseCase {
@@ -12,11 +17,14 @@ export class GetBooksUseCase {
     private readonly bookRepo: BookRepository,
   ) {}
 
-  async execute(_input: Input): Promise<Output> {
-    const books = await this.bookRepo.getBooks();
+  async execute({ cursor, take }: Input): Promise<Output> {
+    const { books, nextCursor } = cursor === null
+      ? { books: [], nextCursor: null }
+      : await this.bookRepo.getBooks({ cursor, take });
 
     return {
-      books
+      books,
+      nextCursor,
     }
   }
 }

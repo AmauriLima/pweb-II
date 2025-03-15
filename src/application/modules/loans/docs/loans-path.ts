@@ -3,14 +3,15 @@ import { PathItem } from "swagger-jsdoc";
 import { closeLoanSwagger } from "./close-loan-swagger";
 import { createLoanSwagger } from "./create-loan-swagger";
 import { getLoansSwagger } from "./get-loans-swagger";
+import { getMyLoansSwagger } from "./get-my-loans-swagger";
 
 export const loansPath: PathItem = {
   post: addDefaultResponsesSwagger(createLoanSwagger),
-  get: addDefaultResponsesSwagger(getLoansSwagger, { omitResponses: ["400"] }),
+  get: addDefaultResponsesSwagger(getLoansSwagger),
 }
 
 export const myLoansPath: PathItem = {
-  get: addDefaultResponsesSwagger(getLoansSwagger, { omitResponses: ["400"] }),
+  get: addDefaultResponsesSwagger(getMyLoansSwagger, { omitResponses: ["400", "403"] }),
 }
 
 export const loansPathWithId: PathItem = {

@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { Book } from "../entities/book";
 import { BookMapper } from "../mappers/book-mapper";
-import { BookOperation, BookRepository } from "./book-repository";
+import { BookOperation, BookRepository, BooksParams, GetBooksResponse } from "./book-repository";
 
 export class PrismaBookRepository implements BookRepository {
   constructor(
@@ -25,9 +25,17 @@ export class PrismaBookRepository implements BookRepository {
     })
   }
 
-  async getBooks(): Promise<Book[]> {
-    const books = await this.prisma.book.findMany();
-    return books.map(BookMapper.toDomain);
+  async getBooks({ cursor, take = 10 }: BooksParams): Promise<GetBooksResponse> {
+    const books = await this.prisma.book.findMany({
+      take: take,
+      skip: cursor ? 1 : 0,
+      cursor: cursor ? { id: cursor } : undefined,
+    });
+
+    return {
+      books: books.map(BookMapper.toDomain),
+      nextCursor: books.length === take ? books[books.length - 1].id : null,
+    };
   }
 
   async getBookById(bookId: string): Promise<Book | null> {
