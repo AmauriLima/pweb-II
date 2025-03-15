@@ -5,9 +5,19 @@ export enum BookOperation {
   RETURN = "RETURN",
 }
 
+export interface BooksParams {
+  cursor?: string;
+  take?: number;
+}
+
+export interface GetBooksResponse {
+  books: Book[];
+  nextCursor: string | null;
+}
+
 export interface BookRepository {
   createBook(book: Book): Promise<void>;
-  getBooks(): Promise<Book[]>;
+  getBooks(params: BooksParams): Promise<GetBooksResponse>;
   getBookById(bookId: string): Promise<Book | null>;
   updateBook(book: Book): Promise<void>;
   removeBook(bookId: string): Promise<void>;

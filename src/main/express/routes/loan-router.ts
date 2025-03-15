@@ -5,7 +5,7 @@ import { Router } from "express";
 import { routeAdapter } from "../adapters/route-adapter";
 
 import { Roles } from "@/application/modules/accounts/entities/role";
-import { makeGetMyLoansController } from "@/application/modules/loans/use-cases/get-loans/factories/make-get-MY-loans-controller";
+import { makeGetMyLoansController } from "@/application/modules/loans/use-cases/get-loans/factories/make-get-my-loans-controller";
 import { makeAuthorizationMiddleware } from "@/application/shared/http/middlewares/factories/make-authorization-middleware";
 import { middlewareAdapter } from "../adapters/middleware-adapter";
 
