@@ -2,7 +2,8 @@
 import { PrismaClient } from "@prisma/client";
 import { Account } from "../entities/account";
 import { AccountMapper } from "../mappers/account-mapper";
-import { AccountRepository } from "./account-repository";
+import { AccountRepository, AccountsParams } from "./account-repository";
+import { GetAccountsResponse } from "./account-repository";
 
 export class PrismaAccountRepository implements AccountRepository {
   constructor(
@@ -36,11 +37,19 @@ export class PrismaAccountRepository implements AccountRepository {
     });
   }
 
-  async getAccounts(): Promise<Account[]> {
-    const accounts = await this.prismaClient.account.findMany();
+ async getAccounts({ cursor, take = 10 }: AccountsParams): Promise<GetAccountsResponse> {
+    const accounts = await this.prismaClient.account.findMany({
+      take: take,
+      skip: cursor ? 1 : 0,
+      cursor: cursor ? { id: cursor } : undefined,
+    });
 
-    return accounts.map(AccountMapper.toDomain);
+    return {
+      accounts: accounts.map(AccountMapper.toDomain),
+      nextCursor: accounts.length === take ? accounts[accounts.length - 1].id : null,
+    };
   }
+
 
   async getAccountByEmail(email: string): Promise<Account | null> {
     const account = await this.prismaClient.account.findUnique({

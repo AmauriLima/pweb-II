@@ -15,4 +15,4 @@ export const accountPathWithId: PathItem = {
   delete: addDefaultResponsesSwagger(deleteAccountSwagger),
 }
 
-
+ 
