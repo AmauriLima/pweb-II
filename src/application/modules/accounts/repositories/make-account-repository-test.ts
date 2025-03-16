@@ -4,7 +4,7 @@ import { AccountRepository, AccountsParams, GetAccountsResponse } from "./accoun
 export function makeAccountRepositoryTest(accountsParam: Account[] = []): AccountRepository {
   return new class TestAccountRepository implements AccountRepository {
     constructor(
-      private readonly accounts = accountsParam,
+      private accounts = accountsParam,
     ) {}
 
     async createAccount(account: Account): Promise<void> {
@@ -33,11 +33,11 @@ export function makeAccountRepositoryTest(accountsParam: Account[] = []): Accoun
     }
 
     async removeAccount(accountId: string): Promise<void> {
-      this.accounts.filter((account) => account.id === accountId);
+      this.accounts = this.accounts.filter((account) => account.id !== accountId);
     }
 
     async updateAccount(account: Account): Promise<void> {
-      this.accounts.map((acc) => acc.id === account.id ? account : acc)
+      this.accounts = this.accounts.map((acc) => acc.id === account.id ? account : acc)
     }
   };
 }
