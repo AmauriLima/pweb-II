@@ -102,7 +102,7 @@ describe("Create account controller", () => {
     } as unknown as IHttpRequest)).rejects.toThrow(new ConflictHTTPError(CREATE_ACCOUNT_CONFLICT_ERROR));
   });
 
-  it('deve dar conflito ao tentar criar uma conta com e-mail sem ter permissão adequada', async () => {
+  it('deve dar acesso negado ao tentar criar uma conta sem ter permissão adequada', async () => {
     await expect(controller.handle({
       body: {
         "name": account1.name,
