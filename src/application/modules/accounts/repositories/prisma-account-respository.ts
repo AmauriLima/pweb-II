@@ -2,8 +2,7 @@
 import { PrismaClient } from "@prisma/client";
 import { Account } from "../entities/account";
 import { AccountMapper } from "../mappers/account-mapper";
-import { AccountRepository, AccountsParams } from "./account-repository";
-import { GetAccountsResponse } from "./account-repository";
+import { AccountRepository, AccountsParams, GetAccountsResponse } from "./account-repository";
 
 export class PrismaAccountRepository implements AccountRepository {
   constructor(
@@ -39,14 +38,16 @@ export class PrismaAccountRepository implements AccountRepository {
 
  async getAccounts({ cursor, take = 10 }: AccountsParams): Promise<GetAccountsResponse> {
     const accounts = await this.prismaClient.account.findMany({
-      take: take,
-      skip: cursor ? 1 : 0,
+      take: take + 1,
       cursor: cursor ? { id: cursor } : undefined,
     });
 
+    const nextCursor = accounts[take]?.id ?? null;
+    nextCursor && accounts.pop();
+
     return {
       accounts: accounts.map(AccountMapper.toDomain),
-      nextCursor: accounts.length === take ? accounts[accounts.length - 1].id : null,
+      nextCursor: nextCursor,
     };
   }
 

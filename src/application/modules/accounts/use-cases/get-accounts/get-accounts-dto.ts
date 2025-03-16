@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const getAccountsSchema = z.object({
-  limit: z.string().optional().transform((v) => Number(v)),
+  limit: z.string().optional().transform((v) => v ? Number(v) : undefined),
   cursor: z.string().uuid().optional().transform((v) => v === 'null' ? null : v),
 });
 

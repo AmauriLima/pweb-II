@@ -1,6 +1,7 @@
 import { ConflictHTTPError } from "@/application/shared/http/errors/conflict-http-error";
 import { NotFoundHTTPError } from "@/application/shared/http/errors/not-found-http-error";
 import { IUseCase } from "@/application/shared/http/interfaces/use-case";
+import { HashProvider } from "@/application/shared/providers/hash-provider/hash-provider";
 import { ACCOUNT_NOT_FOUND_ERROR, UPDATE_ACCOUNT_CONFLICT_ERROR } from "../../docs/update-account-swagger";
 import { Account } from "../../entities/account";
 import { Roles } from "../../entities/role";
@@ -21,6 +22,7 @@ interface IOutput {
 export class UpdateAccountUseCase implements IUseCase<IInput, IOutput> {
   constructor(
     private readonly accountRepo: AccountRepository,
+    private readonly hashProvider: HashProvider,
   ) {}
 
   async execute({ accountId, accountRole, ...input }: IInput): Promise<IOutput> {
@@ -41,6 +43,10 @@ export class UpdateAccountUseCase implements IUseCase<IInput, IOutput> {
       if (accountByEmail && accountByEmail.id !== accountId) {
         throw new ConflictHTTPError(UPDATE_ACCOUNT_CONFLICT_ERROR);
       }
+    }
+
+    if (input.password) {
+      input.password = await this.hashProvider.encrypt(input.password);
     }
 
     const updatedAccount = new Account({
