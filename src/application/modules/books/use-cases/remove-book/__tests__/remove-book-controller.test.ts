@@ -6,6 +6,8 @@ import { makeRemoveBookUseCase } from "../factories/make-remove-book-use-case";
 import { RemoveBookUsecase } from "../remove-book-use-case";
 import { makeRemoveBookController } from "../factories/make-remove-book-controller";
 import { RemoveBookController } from "../remove-book-controller";
+import { NotFoundHTTPError } from "@/application/shared/http/errors/not-found-http-error";
+import { BOOK_NOT_FOUND_ERROR } from "../../../docs/delete-book-swagger";
 describe("Remove book controller", () => {
     let repo: BookRepository;
     let useCase: RemoveBookUsecase;
@@ -37,7 +39,7 @@ describe("Remove book controller", () => {
             params: {
                 bookId: books[0].id
             }
-        } as unknown as IHttpRequest)).rejects.toThrow();
+        } as unknown as IHttpRequest)).rejects.toThrow(new NotFoundHTTPError(BOOK_NOT_FOUND_ERROR));
     }
     );
 

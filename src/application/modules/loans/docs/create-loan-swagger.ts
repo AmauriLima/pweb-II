@@ -5,6 +5,7 @@ import { BOOK_NOT_FOUND_ERROR } from "../../books/docs/delete-book-swagger";
 
 export const BOOK_OUT_ERROR = 'Livro sem estoque!';
 export const LOAN_IN_PROGRESS_ERROR = 'Você já tem um empréstimo desse livro em andamento, devolva primeiro para poder fazer outro';
+export const LOAN_NOT_FOUND_ERROR = 'Empréstimo não encontrado!';
 
 export const createLoanSwagger: Operation = {
   tags: [Tags.LOANS],

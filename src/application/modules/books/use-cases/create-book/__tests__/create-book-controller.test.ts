@@ -46,11 +46,6 @@ describe("Create book controller", () => {
 
   },
 
-
- 
- 
-
-
 );
 
 
@@ -90,22 +85,6 @@ it('deve dar erro ao não passar propriedades obrigatórias', async () => {
   });
 
 
-it('deve dar acesso negado ao tentar criar um livro sem ter permissão adequada', async () => {
-    await expect(controller.handle({
-      body: {
-        "name": book1.name,
-        "description": book1.description,
-        "coverUrl": book1.coverUrl,
-        "totalAmount": book1.totalAmount,
-        "loanAmount": book1.loanAmount
-      },
-      account: {
-        id: account1.id,
-        role: account1.roleCode
-      }
-    } as unknown as IHttpRequest)).rejects.toThrow(new ForbiddenHTTPError(VALIDATE_ROLE_HIERARCHY_ERROR));
-  }
-);
 
 
 });

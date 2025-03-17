@@ -10,7 +10,7 @@ import { books } from "./mock";
 
 Book
 
-describe("Get accounts controller", () => {
+describe("Get books controller", () => {
   let repo: BookRepository;
   let useCase: GetBooksUseCase;
   let controller: GetBooksController;

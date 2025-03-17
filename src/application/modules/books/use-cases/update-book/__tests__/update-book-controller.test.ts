@@ -8,6 +8,7 @@ import { UpdateBookUseCase } from "../../update-book/update-book-use-case";
 import { books } from "./mock";
 import { NotFoundHTTPError } from "@/application/shared/http/errors/not-found-http-error";
 import { ZodError } from "zod";
+import { BOOK_NOT_FOUND_ERROR } from "../../../docs/delete-book-swagger";
 
 describe("Update book controller", () => {
   let repo: BookRepository;
@@ -122,7 +123,7 @@ describe("Update book controller", () => {
           bookId: books[0].id,
         },
       } as unknown as IHttpRequest)
-    ).rejects.toThrow(NotFoundHTTPError);
+    ).rejects.toThrow(new NotFoundHTTPError(BOOK_NOT_FOUND_ERROR));
     expect(spy).not.toHaveBeenCalled();
   });
 
