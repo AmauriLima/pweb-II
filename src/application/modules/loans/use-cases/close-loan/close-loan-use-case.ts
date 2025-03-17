@@ -1,4 +1,5 @@
 import { BookOperation, BookRepository } from "@/application/modules/books/repositories/book-repository";
+import { ConflictHTTPError } from "@/application/shared/http/errors/conflict-http-error";
 import { NotFoundHTTPError } from "@/application/shared/http/errors/not-found-http-error";
 import { IUseCase } from "@/application/shared/http/interfaces/use-case";
 import { LOAN_ALREADY_CLOSED, LOAN_NOT_FOUND } from "../../docs/close-loan-swagger";
@@ -27,7 +28,7 @@ export class CloseLoanUseCase implements IUseCase<IInput, IOutput> {
     }
 
     if (loan.returnDate) {
-      throw new NotFoundHTTPError(LOAN_ALREADY_CLOSED);
+      throw new ConflictHTTPError(LOAN_ALREADY_CLOSED);
     }
 
     loan.returnDate = new Date();

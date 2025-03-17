@@ -26,6 +26,4 @@ export class GetLoansUseCase {
       nextCursor,
     }
   }
-
-  
 }

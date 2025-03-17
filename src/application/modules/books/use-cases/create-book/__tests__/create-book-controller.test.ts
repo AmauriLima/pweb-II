@@ -1,15 +1,12 @@
 import { IHttpRequest } from "@/application/shared/http/interfaces/http";
+import { ZodError } from "zod";
 import { BookRepository } from "../../../repositories/book-repository";
-import { makeBookRepository } from "../../../repositories/make-book-repository";
 import { makeBookRepositoryTest } from "../../../repositories/make-book-repository-test";
 import { CreateBookController } from "../create-book-controller";
 import { CreateBookUseCase } from "../create-book-use-case";
 import { makeCreateBookController } from "../factories/make-create-book-controller";
 import { makeCreateBookUseCase } from "../factories/make-create-book-use-case";
-import { account1, book1, book2 } from "./mock";
-import { ZodError } from "zod";
-import { ForbiddenHTTPError } from "@/application/shared/http/errors/forbidden-http-error";
-import { VALIDATE_ROLE_HIERARCHY_ERROR } from "@/application/modules/accounts/use-cases/validate-role-hierarchy/validate-role-hierarchy-use-case";
+import { book1 } from "./mock";
 
 describe("Create book controller", () => {
     let repo: BookRepository;
@@ -34,7 +31,7 @@ describe("Create book controller", () => {
       },
     } as unknown as IHttpRequest);
 
-    
+
     expect(response.body).toEqual(expect.objectContaining({
       name: expect.any(String),
       description: expect.any(String),
@@ -80,11 +77,7 @@ it('deve dar erro ao não passar propriedades obrigatórias', async () => {
       body: {
         "name": book1.name
       },
-      
+
     } as unknown as IHttpRequest)).rejects.toThrow(ZodError);
   });
-
-
-
-
 });

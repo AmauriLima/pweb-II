@@ -3,8 +3,8 @@ import { IHttpRequest, IHttpResponse } from "@/application/shared/http/interface
 import { HttpResponse } from "@/application/shared/http/response/http-response";
 import { z } from "zod";
 import { LoanMapper } from "../../mappers/loan-mapper";
-import { GetLoansUseCase } from "./get-loans-use-case";
 import { getLoansSchema } from "./get-loans-dto";
+import { GetLoansUseCase } from "./get-loans-use-case";
 
 const schema = z.object({
   accountId: z.string().uuid().optional(),
@@ -16,7 +16,7 @@ export class GetLoansController implements IController {
   ) {}
 
   async handle(request: IHttpRequest): Promise<IHttpResponse> {
-    const { 
+    const {
       accountId,
       cursor,
       limit
@@ -34,12 +34,5 @@ export class GetLoansController implements IController {
         nextCursor,
       }
     });
-
-    
   }
-
-
-
-
-  
 }

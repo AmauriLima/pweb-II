@@ -37,7 +37,10 @@ export function makeBookRepositoryTest(booksParam: Book[] = []): BookRepository 
     }
 
     async changeBookLoanAmount(book: Book, operation: BookOperation): Promise<void> {
-       //TODO: Implementar
-      }
+      this.books = this.books.map(bk => bk.id === book.id ? new Book({
+        ...book.props,
+        loanAmount: operation === BookOperation.LOAN ? book.loanAmount + 1 : book.loanAmount - 1
+      }) : book)
+    }
   };
 }
