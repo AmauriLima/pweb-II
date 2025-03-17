@@ -11,9 +11,7 @@ export class GetBooksController implements IController {
   ) {}
 
   async handle(request: IHttpRequest): Promise<IHttpResponse> {
-    const {
-      cursor, limit
-    } = getBooksSchema.parse(request.query);
+    const { cursor, limit } = getBooksSchema.parse(request.query);
 
     const { books, nextCursor } = await this.useCase.execute({
       cursor,

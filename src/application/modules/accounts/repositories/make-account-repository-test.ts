@@ -6,7 +6,7 @@ export function makeAccountRepositoryTest(accountsParam: Account[] = []): Accoun
     constructor(
       private accounts = accountsParam,
     ) {}
-
+ 
     async createAccount(account: Account): Promise<void> {
       this.accounts.push(account);
     }
