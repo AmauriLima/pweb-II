@@ -5,6 +5,7 @@ import { makeUpdateAccountController } from "@/application/modules/accounts/use-
 import { makeAuthorizationMiddleware } from "@/application/shared/http/middlewares/factories/make-authorization-middleware";
 
 import { Roles } from "@/application/modules/accounts/entities/role";
+import { makeGetMyAccountController } from "@/application/modules/accounts/use-cases/get-account/factories/make-get-my-account-controller";
 import { Router } from "express";
 import { middlewareAdapter } from "../adapters/middleware-adapter";
 import { routeAdapter } from "../adapters/route-adapter";
@@ -16,6 +17,7 @@ const authorizationMiddleware =
 
 accountRouter.get('/', authorizationMiddleware, routeAdapter(makeGetAccountsController()));
 accountRouter.post('/', authorizationMiddleware, routeAdapter(makeCreateAccountController()));
+accountRouter.get('/me', routeAdapter(makeGetMyAccountController()));
 accountRouter.put('/:accountId', authorizationMiddleware, routeAdapter(makeUpdateAccountController()));
 accountRouter.delete('/:accountId', authorizationMiddleware, routeAdapter(makeRemoveAccountController()));
 

@@ -1,6 +1,6 @@
 import { Tags } from '@/@types/tags';
 import { env } from '@/application/config/env';
-import { accountPathWithId, accountsPath } from '@/application/modules/accounts/docs/accounts-path';
+import { accountPathWithId, accountPathWithMe, accountsPath } from '@/application/modules/accounts/docs/accounts-path';
 import { accountHttpSchema } from '@/application/modules/accounts/mappers/account-mapper';
 import { createAccountOpenAPISchema } from '@/application/modules/accounts/use-cases/create-account/create-account-dto';
 import { updateAccountOpenAPISchema } from '@/application/modules/accounts/use-cases/update-account/update-account-dto';
@@ -153,6 +153,7 @@ const options: swaggerJsdoc.Options = {
     paths: {
       '/auth/sign-in': authPath,
       '/accounts': accountsPath,
+      '/accounts/me': accountPathWithMe,
       '/accounts/{accountId}': accountPathWithId,
       '/books': booksPath,
       '/books/{bookId}': booksPathWithId,
