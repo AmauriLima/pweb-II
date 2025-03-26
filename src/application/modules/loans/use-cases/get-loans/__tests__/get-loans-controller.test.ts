@@ -12,7 +12,7 @@ describe("get loans controller", () => {
   let useCase: GetLoansUseCase;
   let controller: GetLoansController;
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     loanrepo = makeLoanRepositoryTest(loans);
     useCase = makeGetLoansUseCase(loanrepo);
     controller = makeGetLoansController(useCase);
@@ -24,7 +24,7 @@ describe("get loans controller", () => {
     const response = await controller.handle({ query: {} } as IHttpRequest);
 
     expect(response.body?.data).toHaveLength(0);
-    expect(response.body?.nextCursor).toBe(null);
+    expect(response.body?.totalItems).toBe(0);
     expect(response.statusCode).toBe(200);
   });
 
@@ -32,21 +32,21 @@ describe("get loans controller", () => {
     const response = await controller.handle({ query: {} } as IHttpRequest);
 
     expect(response.body?.data).toHaveLength(2);
-    expect(response.body?.nextCursor).toBe(null);
+    expect(response.body?.totalItems).toBe(2);
     expect(response.statusCode).toBe(200);
   });
 
   it("deve retornar uma lista de empréstimos com 1 por página", async () => {
-    const response = await controller.handle({ query: { limit: '1' } } as unknown as IHttpRequest);
+    const response = await controller.handle({ query: { perPage: '1' } } as unknown as IHttpRequest);
     expect(response.body?.data).toHaveLength(1);
-    expect(response.body?.nextCursor).toBe(loans[1].id);
+    expect(response.body?.totalItems).toBe(2);
     expect(response.statusCode).toBe(200);
   });
 
   it("deve retornar uma lista de empréstimos com 1 por página, para segunda e última página", async () => {
-    const response = await controller.handle({ query: { limit: '1', cursor: loans[1].id } } as unknown as IHttpRequest);
+    const response = await controller.handle({ query: { perPage: '1', page: '1' } } as unknown as IHttpRequest);
     expect(response.body?.data).toHaveLength(1);
-    expect(response.body?.nextCursor).toBe(null);
+    expect(response.body?.totalItems).toBe(2);
     expect(response.statusCode).toBe(200);
   });
 });

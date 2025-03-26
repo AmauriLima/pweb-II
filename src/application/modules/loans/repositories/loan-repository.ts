@@ -2,16 +2,16 @@ import { Loan } from "../entities/loan";
 
 export interface LoansParams {
   accountId?: string;
-  cursor?: string;
-  take?: number;
+  page?: number;
+  perPage?: number;
 }
 
 export interface GetLoansResponse {
   loans: Loan[];
-  nextCursor: string | null;
+  totalLoans: number;
 }
 export interface LoanRepository {
-  getLoans(params: LoansParams): Promise<GetLoansResponse>;  
+  getLoans(params: LoansParams): Promise<GetLoansResponse>;
   getLoansByAccountId(accountId: string): Promise<Loan[]>;
   getLoanById(loanId: string): Promise<Loan | null>;
   createLoan(loan: Loan): Promise<void>;

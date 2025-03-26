@@ -7,16 +7,15 @@ export function makeLoanRepositoryTest(loansParam: Loan[] = []): LoanRepository 
       private loans = loansParam,
     ) {}
 
-    async getLoans({ cursor, take = 10 }: LoansParams): Promise<GetLoansResponse> {
-      const loanCursor = cursor ? this.loans.filter((loan) => loan.id >= cursor) : this.loans;
-      const loans = loanCursor.slice(0, take + 1);
-
-      const nextCursor = loans[take]?.id ?? null;
-      nextCursor && loans.pop();
+    async getLoans({ page = 1, perPage = 10, accountId }: LoansParams): Promise<GetLoansResponse> {
+      const filteredLoans = accountId ? this.loans.filter((loan) => loan.accountId === accountId) : this.loans;
+      const start = (page - 1) * perPage;
+      const end = start + perPage;
+      const loans = filteredLoans.slice(start, end);
 
       return {
         loans,
-        nextCursor,
+        totalLoans: filteredLoans.length,
       };
     }
 
