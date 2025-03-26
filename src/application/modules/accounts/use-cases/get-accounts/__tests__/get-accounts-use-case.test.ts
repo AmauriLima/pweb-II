@@ -18,7 +18,7 @@ describe("Get accounts use case", () => {
     const response = await useCase.execute({ });
 
     expect(response).toHaveProperty("accounts");
-    expect(response).toHaveProperty("nextCursor");
+    expect(response).toHaveProperty("totalAccounts");
     expect(response.accounts).toHaveLength(0);
   });
 
@@ -26,7 +26,7 @@ describe("Get accounts use case", () => {
     const response = await useCase.execute({});
 
     expect(response).toHaveProperty("accounts");
-    expect(response).toHaveProperty("nextCursor");
+    expect(response).toHaveProperty("totalAccounts");
     expect(response.accounts).toHaveLength(2);
     expect(response.accounts[0]).toHaveProperty("name");
     expect(response.accounts[0]).toHaveProperty("email");

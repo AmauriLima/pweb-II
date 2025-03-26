@@ -36,18 +36,16 @@ export class PrismaAccountRepository implements AccountRepository {
     });
   }
 
- async getAccounts({ cursor, take = 10 }: AccountsParams): Promise<GetAccountsResponse> {
+ async getAccounts({ page = 1, perPage = 10 }: AccountsParams): Promise<GetAccountsResponse> {
+    const totalAccounts = await this.prismaClient.account.count();
     const accounts = await this.prismaClient.account.findMany({
-      take: take + 1,
-      cursor: cursor ? { id: cursor } : undefined,
+      take: perPage,
+      skip: page ? (page - 1) * perPage : 0,
     });
-
-    const nextCursor = accounts[take]?.id ?? null;
-    nextCursor && accounts.pop();
 
     return {
       accounts: accounts.map(AccountMapper.toDomain),
-      nextCursor: nextCursor,
+      totalAccounts,
     };
   }
 

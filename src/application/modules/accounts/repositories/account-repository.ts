@@ -1,13 +1,13 @@
 import { Account } from "../entities/account";
 
 export interface AccountsParams {
-  cursor?: string;
-  take?: number;
+  page?: number;
+  perPage?: number;
 }
 
 export interface GetAccountsResponse {
   accounts: Account[];
-  nextCursor: string | null;
+  totalAccounts: number;
 }
 
 export interface AccountRepository {
