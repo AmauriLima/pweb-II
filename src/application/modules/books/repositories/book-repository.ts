@@ -6,13 +6,13 @@ export enum BookOperation {
 }
 
 export interface BooksParams {
-  cursor?: string;
-  take?: number;
+  page?: number;
+  perPage?: number;
 }
 
 export interface GetBooksResponse {
   books: Book[];
-  nextCursor: string | null;
+  totalBooks: number;
 }
 
 export interface BookRepository {

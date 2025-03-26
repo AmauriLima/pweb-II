@@ -16,18 +16,19 @@ describe("Get books use case", () => {
     it("deve retornar uma lista vazia", async () => {
         const useCase = makeGetBooksUseCase(makeBookRepositoryTest());
         const response = await useCase.execute({ });
-    
+
         expect(response).toHaveProperty("books");
-        expect(response).toHaveProperty("nextCursor");
+        expect(response).toHaveProperty("totalBooks");
         expect(response.books).toHaveLength(0);
     });
 
     it("deve retornar uma lista de livros", async () => {
         const response = await useCase.execute({});
-    
+
         expect(response).toHaveProperty("books");
-        expect(response).toHaveProperty("nextCursor");
+        expect(response).toHaveProperty("totalBooks");
         expect(response.books).toHaveLength(2);
+        expect(response.totalBooks).toBe(2);
         expect(response.books[0]).toHaveProperty("name");
         expect(response.books[0]).toHaveProperty("description");
         expect(response.books[0]).toHaveProperty("coverUrl");

@@ -25,18 +25,16 @@ export class PrismaBookRepository implements BookRepository {
     })
   }
 
-  async getBooks({ cursor, take = 10 }: BooksParams): Promise<GetBooksResponse> {
+  async getBooks({ page = 1, perPage = 10 }: BooksParams): Promise<GetBooksResponse> {
+    const totalBooks = await this.prisma.book.count();
     const books = await this.prisma.book.findMany({
-      take: take + 1,
-      cursor: cursor ? { id: cursor } : undefined,
+      take: perPage,
+      skip: page ? (page - 1) * perPage : 0,
     });
-
-    const nextCursor = books[take]?.id ?? null;
-    nextCursor && books.pop();
 
     return {
       books: books.map(BookMapper.toDomain),
-      nextCursor,
+      totalBooks,
     };
   }
 

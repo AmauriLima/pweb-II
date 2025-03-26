@@ -11,16 +11,14 @@ export function makeBookRepositoryTest(booksParam: Book[] = []): BookRepository 
       this.books.push(book);
     }
 
-    async getBooks({ cursor, take = 10 }: BooksParams): Promise<GetBooksResponse> {
-      const bookCursor = cursor ? this.books.filter((book) => book.id >= cursor) : this.books;
-      const books = bookCursor.slice(0, take + 1);
-
-      const nextCursor = books[take]?.id ?? null;
-      nextCursor && books.pop();
+    async getBooks({ page = 1, perPage = 10 }: BooksParams): Promise<GetBooksResponse> {
+      const start = (page - 1) * perPage;
+      const end = start + perPage;
+      const books = this.books.slice(start, end);
 
       return {
         books,
-        nextCursor,
+        totalBooks: this.books.length,
       };
     }
 

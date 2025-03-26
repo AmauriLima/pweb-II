@@ -7,22 +7,23 @@ export const getBooksSwagger: Operation = {
   description: 'Retorna uma lista com todos os livros cadastrados',
   parameters: [
     {
-      name: "limit",
+      name: "page",
+      in: "query",
+      description: "Página que deve ser mostrada",
+      required: false,
+      schema: {
+        type: "integer",
+        default: 1
+      },
+    },
+    {
+      name: "perPage",
       in: "query",
       description: "Número de livros por página",
       required: false,
       schema: {
         type: "integer",
         default: 10,
-      },
-    },
-    {
-      name: "cursor",
-      in: "query",
-      description: "Cursor para paginação baseada em cursor, UUID",
-      required: false,
-      schema: {
-        type: "string",
       },
     },
   ],
