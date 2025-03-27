@@ -3,13 +3,13 @@ import { BookRepository } from "../../repositories/book-repository";
 
 
 interface Input {
-  cursor?: string | null;
-  take?: number;
+  page?: number;
+  perPage?: number;
 };
 
 interface Output {
   books: Book[];
-  nextCursor: string | null;
+  totalBooks: number;
 };
 
 export class GetBooksUseCase {
@@ -17,14 +17,12 @@ export class GetBooksUseCase {
     private readonly bookRepo: BookRepository,
   ) {}
 
-  async execute({ cursor, take }: Input): Promise<Output> {
-    const { books, nextCursor } = cursor === null
-      ? { books: [], nextCursor: null }
-      : await this.bookRepo.getBooks({ cursor, take });
+  async execute({ page, perPage }: Input): Promise<Output> {
+    const { books, totalBooks } = await this.bookRepo.getBooks({ page, perPage });
 
     return {
       books,
-      nextCursor,
+      totalBooks,
     }
   }
 }

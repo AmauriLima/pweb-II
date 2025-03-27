@@ -6,21 +6,19 @@ export function makeAccountRepositoryTest(accountsParam: Account[] = []): Accoun
     constructor(
       private accounts = accountsParam,
     ) {}
- 
+
     async createAccount(account: Account): Promise<void> {
       this.accounts.push(account);
     }
 
-    async getAccounts({ cursor, take = 10 }: AccountsParams): Promise<GetAccountsResponse> {
-      const accountCursor = cursor ? this.accounts.filter((account) => account.id >= cursor) : this.accounts;
-      const accounts = accountCursor.slice(0, take + 1);
-
-      const nextCursor = accounts[take]?.id ?? null;
-      nextCursor && accounts.pop();
+    async getAccounts({ page = 1, perPage = 10 }: AccountsParams): Promise<GetAccountsResponse> {
+      const start = (page - 1) * perPage;
+      const end = start + perPage;
+      const accounts = this.accounts.slice(start, end);
 
       return {
         accounts,
-        nextCursor,
+        totalAccounts: this.accounts.length,
       };
     }
 

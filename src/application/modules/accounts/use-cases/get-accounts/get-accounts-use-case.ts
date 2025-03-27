@@ -3,13 +3,13 @@ import { Account } from "../../entities/account";
 import { AccountRepository } from "../../repositories/account-repository";
 
 interface Input {
-  cursor?: string | null;
-  take?: number;
+  page?: number;
+  perPage?: number;
 };
 
 interface Output {
   accounts: Account[];
-  nextCursor: string | null;
+  totalAccounts: number;
 };
 
 export class GetAccountsUseCase implements IUseCase<Input, Output> {
@@ -17,14 +17,12 @@ export class GetAccountsUseCase implements IUseCase<Input, Output> {
     private readonly accountRepo: AccountRepository,
   ) {}
 
-  async execute({ cursor, take }: Input): Promise<Output> {
-    const { accounts, nextCursor } = cursor === null
-      ? { accounts: [], nextCursor: null }
-      : await this.accountRepo.getAccounts({ cursor, take });
+  async execute({ page, perPage }: Input): Promise<Output> {
+    const { accounts, totalAccounts } = await this.accountRepo.getAccounts({ page, perPage });
 
     return {
       accounts,
-      nextCursor,
+      totalAccounts,
     }
   }
 }

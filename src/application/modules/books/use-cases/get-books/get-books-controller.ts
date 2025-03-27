@@ -11,17 +11,17 @@ export class GetBooksController implements IController {
   ) {}
 
   async handle(request: IHttpRequest): Promise<IHttpResponse> {
-    const { cursor, limit } = getBooksSchema.parse(request.query);
+    const { page, perPage } = getBooksSchema.parse(request.query);
 
-    const { books, nextCursor } = await this.useCase.execute({
-      cursor,
-      take: limit
+    const { books, totalBooks } = await this.useCase.execute({
+      page,
+      perPage,
     });
 
     return HttpResponse.ok({
       body: {
         data: books.map(BookMapper.toHttp),
-        nextCursor,
+        totalItems: totalBooks,
       }
     });
   }

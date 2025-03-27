@@ -30,7 +30,7 @@ export class CreateLoanUseCase implements IUseCase<IInput, IOutput> {
       throw new NotFoundHTTPError(BOOK_NOT_FOUND_ERROR);
     }
 
-    const account = await this.accountRepo.getAccountById(input.accountId);
+    const account = await this.accountRepo.getAccountByEmail(input.accountEmail);
 
     if (!account) {
       throw new NotFoundHTTPError(ACCOUNT_NOT_FOUND_ERROR);
@@ -40,14 +40,14 @@ export class CreateLoanUseCase implements IUseCase<IInput, IOutput> {
       throw new ConflictHTTPError(BOOK_OUT_ERROR);
     }
 
-    const hasPendentLoan = await this.loanRepo.hasPendentLoan(input.accountId, input.bookId);
+    const hasPendentLoan = await this.loanRepo.hasPendentLoan(account.id, input.bookId);
 
     if (hasPendentLoan) {
       throw new ConflictHTTPError(LOAN_IN_PROGRESS_ERROR);
     }
 
     const loan = new Loan({
-      accountId: input.accountId,
+      accountId: account.id,
       bookId: input.bookId,
       dueDate: new Date(input.dueDate),
       accountName: account.name,

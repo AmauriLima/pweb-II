@@ -1,4 +1,6 @@
 import { IHttpRequest } from "@/application/shared/http/interfaces/http";
+import { Account } from "../../../entities/account";
+import { Roles } from "../../../entities/role";
 import { AccountRepository } from "../../../repositories/account-repository";
 import { makeAccountRepositoryTest } from "../../../repositories/make-account-repository-test";
 import { makeGetAccountsController } from "../factories/make-get-accounts-controller";
@@ -12,7 +14,7 @@ describe("Get accounts controller", () => {
   let useCase: GetAccountsUseCase;
   let controller: GetAccountsController;
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     repo = makeAccountRepositoryTest(accounts);
     useCase = makeGetAccountsUseCase(repo);
     controller = makeGetAccountsController(useCase);
@@ -24,7 +26,7 @@ describe("Get accounts controller", () => {
     const response = await controller.handle({ query: {} } as IHttpRequest);
 
     expect(response.body?.data).toHaveLength(0);
-    expect(response.body?.nextCursor).toBe(null);
+    expect(response.body?.totalItems).toBe(0);
     expect(response.statusCode).toBe(200);
   });
 
@@ -35,37 +37,43 @@ describe("Get accounts controller", () => {
     expect(response.body?.data).toEqual(expect.arrayContaining(
       [expect.not.objectContaining({ password: expect.any(String) })]
     ));
-    expect(response.body?.nextCursor).toBe(null);
+    expect(response.body?.totalItems).toBe(2);
     expect(response.statusCode).toBe(200);
   });
 
   it("deve retornar uma lista de contas com 1 por página", async () => {
-    const response = await controller.handle({ query: { limit: '1' } } as unknown as IHttpRequest);
+    const response = await controller.handle({ query: { perPage: 1 } } as unknown as IHttpRequest);
 
     expect(response.body?.data).toHaveLength(1);
     expect(response.body?.data).toEqual(expect.arrayContaining(
       [expect.not.objectContaining({ password: expect.any(String), id: account1.id })]
     ));
-    expect(response.body?.nextCursor).toBe(account2.id);
+    expect(response.body?.totalItems).toBe(2);
     expect(response.statusCode).toBe(200);
   });
 
   it("deve retornar uma lista de contas com 1 por página, para segunda e última página", async () => {
-    const response = await controller.handle({ query: { limit: '1', cursor: account2.id } } as unknown as IHttpRequest);
+    repo.createAccount(new Account({
+      email: "teste@gmail.com",
+      name: 'teste',
+      password: 'teste',
+      roleCode: Roles.USER
+    }));
+    const response = await controller.handle({ query: { perPage: 1, page: 2 } } as unknown as IHttpRequest);
 
     expect(response.body?.data).toHaveLength(1);
     expect(response.body?.data).toEqual(expect.arrayContaining(
       [expect.not.objectContaining({ password: expect.any(String), id: account2.id })]
     ));
-    expect(response.body?.nextCursor).toBe(null);
+    expect(response.body?.totalItems).toBe(3);
     expect(response.statusCode).toBe(200);
   });
 
   it("deve retornar uma lista de contas paginada, na última página", async () => {
-    const response = await controller.handle({ query: { limit: '3' } } as unknown as IHttpRequest);
+    const response = await controller.handle({ query: { perPage: 3 } } as unknown as IHttpRequest);
 
-    expect(response.body?.data).toHaveLength(2);
-    expect(response.body?.nextCursor).toBe(null);
+    expect(response.body?.data).toHaveLength(3);
+    expect(response.body?.totalItems).toBe(3);
     expect(response.statusCode).toBe(200);
   });
 });

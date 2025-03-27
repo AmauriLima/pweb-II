@@ -18,7 +18,7 @@ describe("Get loans use case", () => {
     const response = await useCase.execute({ });
 
     expect(response).toHaveProperty("loans");
-    expect(response).toHaveProperty("nextCursor");
+    expect(response).toHaveProperty("totalLoans");
     expect(response.loans).toHaveLength(0);
   });
 
@@ -26,8 +26,9 @@ describe("Get loans use case", () => {
     const response = await useCase.execute({});
 
     expect(response).toHaveProperty("loans");
-    expect(response).toHaveProperty("nextCursor");
+    expect(response).toHaveProperty("totalLoans");
     expect(response.loans).toHaveLength(2);
+    expect(response.totalLoans).toBe(2);
     expect(response.loans[0]).toHaveProperty("accountId");
     expect(response.loans[0]).toHaveProperty("bookId");
     expect(response.loans[0]).toHaveProperty("dueDate");

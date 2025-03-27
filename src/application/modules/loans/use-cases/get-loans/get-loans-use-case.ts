@@ -3,12 +3,12 @@ import { LoanRepository } from "../../repositories/loan-repository";
 
 interface Input {
   accountId?: string;
-  cursor?: string | null;
-  take?: number;
+  page?: number;
+  perPage?: number;
 };
 interface Output {
   loans: Loan[]
-  nextCursor: string | null;
+  totalLoans: number;
 };
 
 export class GetLoansUseCase {
@@ -16,14 +16,12 @@ export class GetLoansUseCase {
     private readonly loanRepo: LoanRepository,
   ) {}
 
-  async execute({ accountId, cursor, take }: Input): Promise<Output> {
-    const { loans, nextCursor } = cursor === null
-      ? { loans: [], nextCursor: null }
-      : await this.loanRepo.getLoans({ accountId, cursor, take });
+  async execute({ accountId, page, perPage }: Input): Promise<Output> {
+    const { loans, totalLoans } = await this.loanRepo.getLoans({ accountId, page, perPage });
 
     return {
       loans,
-      nextCursor,
+      totalLoans,
     }
   }
 }

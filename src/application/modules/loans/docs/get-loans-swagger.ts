@@ -16,22 +16,23 @@ export const getLoansSwagger: Operation = {
       },
     },
     {
-      name: "limit",
+      name: "page",
       in: "query",
-      description: "Número de empréstimos por página",
+      description: "Página atual para paginação",
+      required: false,
+      schema: {
+        type: "integer",
+        default: 1,
+      },
+    },
+    {
+      name: "perPage",
+      in: "query",
+      description: "Quantidade de itens por página",
       required: false,
       schema: {
         type: "integer",
         default: 10,
-      },
-    },
-    {
-      name: "cursor",
-      in: "query",
-      description: "Cursor para paginação baseada em cursor, UUID",
-      required: false,
-      schema: {
-        type: "string",
       },
     },
   ],

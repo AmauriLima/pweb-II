@@ -11,17 +11,17 @@ export class GetAccountsController implements IController {
   ) {}
 
   async handle(request: IHttpRequest): Promise<IHttpResponse> {
-    const { cursor, limit } = getAccountsSchema.parse(request.query);
+    const { page, perPage } = getAccountsSchema.parse(request.query);
 
-    const { accounts, nextCursor } = await this.useCase.execute({
-      cursor,
-      take: limit
+    const { accounts, totalAccounts } = await this.useCase.execute({
+      page,
+      perPage,
     });
 
     return HttpResponse.ok({
       body: {
         data: accounts.map(AccountMapper.toHttp),
-        nextCursor,
+        totalItems: totalAccounts,
       }
     });
   }

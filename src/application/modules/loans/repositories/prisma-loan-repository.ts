@@ -45,20 +45,21 @@ export class PrismaLoanRepository implements LoanRepository {
     });
   }
 
-  async getLoans({accountId, cursor, take = 10 }: LoansParams): Promise<GetLoansResponse> {
+  async getLoans({accountId, page = 1, perPage = 10 }: LoansParams): Promise<GetLoansResponse> {
+    const totalLoans = await this.prisma.book.count();
     const loans = await this.prisma.loan.findMany({
-      take: take + 1,
-      cursor: cursor ? { id: cursor } : undefined,
+      take: perPage,
+      skip: page ? (page - 1) * perPage : 0,
       where: accountId ? { accountId } : undefined,
       include: this.include,
+      orderBy: {
+        returnDate: 'desc'
+      }
     });
-
-    const nextCursor = loans[take]?.id ?? null;
-    nextCursor && loans.pop();
 
     return {
       loans: loans.map(LoanMapper.toDomain),
-      nextCursor,
+      totalLoans,
     }
   }
 
