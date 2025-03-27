@@ -52,11 +52,11 @@ export class LoanMapper {
   static toHttp(domain: Loan) {
     return {
       id: domain.id,
-      accountId: {
+      account: {
         id: domain.accountId,
         name: domain.accountName,
       },
-      bookId: {
+      book: {
         id: domain.bookId,
         name: domain.bookName,
       },

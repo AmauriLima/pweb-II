@@ -11,7 +11,9 @@ export class CreateLoanController implements IController {
   ) {}
 
   async handle(request: IHttpRequest): Promise<IHttpResponse> {
+    console.log(request.body)
     const parsedBody = createLoanSchema.parse(request.body);
+    console.log(parsedBody)
 
     const { loan } = await this.useCase.execute(parsedBody);
 

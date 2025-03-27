@@ -52,6 +52,9 @@ export class PrismaLoanRepository implements LoanRepository {
       skip: page ? (page - 1) * perPage : 0,
       where: accountId ? { accountId } : undefined,
       include: this.include,
+      orderBy: {
+        returnDate: 'desc'
+      }
     });
 
     return {

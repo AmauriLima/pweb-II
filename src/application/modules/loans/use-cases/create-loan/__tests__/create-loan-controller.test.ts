@@ -38,7 +38,7 @@ describe("Create loan controller", () => {
         const response = await controller.handle({
             body: {
                 bookId: book1.id,
-                accountId: account1.id,
+                accountEmail: account1.email,
                 dueDate: "2025-03-17T00:00:06.905Z",
                 returnDate: "2025-03-17T00:00:06.905Z"
             },
@@ -52,16 +52,15 @@ describe("Create loan controller", () => {
     });
 
     it("Deve retornar erro 404 se o livro não for encontrado", async () => {
-        await accountrepo.createAccount(account1);
-        await expect( controller.handle({
-            body: {
-                bookId: book1.id,
-                accountId: account1.id,
-                dueDate: "2025-03-17T00:00:06.905Z",
-                returnDate: "2025-03-17T00:00:06.905Z"
-            },
-        } as unknown as IHttpRequest)).rejects.toThrow(new NotFoundHTTPError(BOOK_NOT_FOUND_ERROR))
-
+      await accountrepo.createAccount(account1);
+      await expect( controller.handle({
+          body: {
+              bookId: book1.id,
+              accountEmail: account1.email,
+              dueDate: "2025-03-17T00:00:06.905Z",
+              returnDate: "2025-03-17T00:00:06.905Z"
+          },
+      } as unknown as IHttpRequest)).rejects.toThrow(new NotFoundHTTPError(BOOK_NOT_FOUND_ERROR));
     });
 
     it("Deve retornar erro 404 se a conta não for encontrada", async () => {
@@ -69,7 +68,7 @@ describe("Create loan controller", () => {
         await expect( controller.handle({
             body: {
                 bookId: book1.id,
-                accountId: account1.id,
+                accountEmail: account1.email,
                 dueDate: "2025-03-17T00:00:06.905Z",
                 returnDate: "2025-03-17T00:00:06.905Z"
             },
@@ -83,7 +82,7 @@ describe("Create loan controller", () => {
       await expect( controller.handle({
           body: {
               bookId: book2.id,
-              accountId: account1.id,
+              accountEmail: account1.email,
               dueDate: "2025-03-17T00:00:06.905Z",
               returnDate: "2025-03-17T00:00:06.905Z"
           },
@@ -98,7 +97,7 @@ describe("Create loan controller", () => {
       await expect( controller.handle({
           body: {
               bookId: loan1.bookId,
-              accountId: loan1.accountId,
+              accountEmail: account1.email,
               dueDate: "2025-03-17T00:00:06.905Z",
               returnDate: "2025-03-17T00:00:06.905Z"
           },
