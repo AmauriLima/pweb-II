@@ -48,10 +48,9 @@ export const getLoansSwagger: Operation = {
                 type: 'array',
                 items: { $ref: '#/components/schemas/LoanResponse' },
               },
-              nextCursor: {
-                type: 'string',
-                nullable: true,
-                description: "Cursor para a próxima página. Null indica que não há mais resultados.",
+              totalItems: {
+                type: 'integer',
+                description: "Total de items.",
               },
             },
           },
